@@ -1,26 +1,21 @@
 import React, { Component } from 'react'
-import * as categoriesAPI from '../Util/categoriesAPI'
-import * as postsAPI from '../Util/postsAPI'
+import { Route } from 'react-router-dom'
+import ListCategories from './ListCategories'
+import ListPosts from './ListPosts'
+import { generateKey } from '../Util/helpers'
 
-class App extends Component {
-  constructor(){
-    super();
-    this.state = {
-    
-    }
-  }
-  componentDidMount(){    
-   
-  }
-  render() {
-    return (
+class App extends Component { 
+  render(){  
+    return(
       <div>
-        <p className='App-intro'>
-          Hello World !
-        </p>
+        <Route exact path="/" render={() => (
+          [ 
+            <ListCategories key={generateKey()} />,
+            <ListPosts key={generateKey()} />
+          ]
+        )}/>        
       </div>
     )
   }
 }
-
 export default App;
