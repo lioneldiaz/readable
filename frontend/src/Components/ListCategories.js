@@ -20,6 +20,7 @@ class ListCategories extends Component {
     const { categories } = this.props
     return(
       <div>
+        <h2 className="list-category-post">Categories</h2>
         <ul>
           {categories.categories.map((category, index) => (
             <li key={index}>

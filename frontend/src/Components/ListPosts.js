@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { fetchPosts } from '../Actions/postAction'
+import { fetchPosts, fetchRemovePost } from '../Actions/postAction'
+import FaCommentO from 'react-icons/lib/fa/comment-o'
+import { Link } from 'react-router-dom'
 
 class ListPosts extends Component {
   /**
@@ -17,16 +19,27 @@ class ListPosts extends Component {
     this.props.getPosts()
   }
   render(){
-    const { posts } = this.props
+    const { posts, removePost } = this.props    
     return(
       <div>
-        <ul>
-          {posts.posts.map((post, index) => (
-            <li key={index}>
-              {post.title}
-            </li>
-          ))}
-        </ul>
+        <h2 className="list-category-post">Posts</h2>        
+        {posts.posts.map((post, index) => (
+          
+          <div key={index} className="post">
+            <div>
+              <p><strong>Title:</strong> {post.title}</p>
+              <p><strong>Author:</strong> {post.author}</p>
+            </div>
+            <div>
+              <p><FaCommentO size={25}/>{post.commentCount}</p>
+              <Link to={{ pathname: '/editPost'}} >
+                Edit
+              </Link>
+              <button onClick={() => removePost(post)}>Delete</button>
+            </div>
+          </div>          
+        ))}
+        
       </div>
     )
   }
@@ -48,7 +61,8 @@ function mapStateToProps (state) {
  */
 function mapDispatchToProps (dispatch) {
   return {
-    getPosts: () => dispatch(fetchPosts(dispatch))
+    getPosts: () => dispatch(fetchPosts(dispatch)),
+    removePost: (data) => dispatch(fetchRemovePost(data)),
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListPosts)

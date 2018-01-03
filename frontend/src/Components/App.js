@@ -3,6 +3,8 @@ import { Route } from 'react-router-dom'
 import ListCategories from './ListCategories'
 import ListPosts from './ListPosts'
 import { generateKey } from '../Util/helpers'
+import CreatePost from './CreatePost'
+import '../App.css'
 
 class App extends Component { 
   render(){  
@@ -13,7 +15,10 @@ class App extends Component {
             <ListCategories key={generateKey()} />,
             <ListPosts key={generateKey()} />
           ]
-        )}/>        
+        )}/>
+        <Route path="/createPost" render={() => (
+          <CreatePost />
+        )}/>       
       </div>
     )
   }

@@ -7,7 +7,7 @@ export const GET_CATEGORIES = 'GET_CATEGORIES'
 /**
  * @description Action creators
  */
-export function getCategories(categories) {  
+export function getCategories(categories) {
   return {
     type: GET_CATEGORIES,
     categories

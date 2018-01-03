@@ -42,5 +42,5 @@ export const detail = (id) =>
 export const remove = (post) =>
   fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
     .then(result => result.json())
-    .then(data => data.posts)
+    .then(data => data)
 

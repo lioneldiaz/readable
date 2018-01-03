@@ -21,9 +21,24 @@ export const DETAIL_POST = 'DETAIL_POST'
  }
 
  export function fetchPosts () {
-   return dispstch => {
+   return dispatch => {
      postsAPI
       .getAll()
-      .then(posts => dispstch(getPosts(posts)))
+      .then(posts => dispatch(getPosts(posts)))
    }
+ }
+
+ export function removePost (idPost) {
+   return {
+      type: REMOVE_POST,
+      idPost,
+   }
+ }
+
+ export function fetchRemovePost (post) {
+  return dispatch => {
+    postsAPI
+      .remove(post)
+      .then(post => dispatch(removePost(post.id)))
+  }
  }
