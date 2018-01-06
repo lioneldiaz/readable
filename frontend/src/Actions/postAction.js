@@ -19,12 +19,25 @@ export const DETAIL_POST = 'DETAIL_POST'
     posts
   }
  }
-
  export function fetchPosts () {
    return dispatch => {
      postsAPI
       .getAll()
       .then(posts => dispatch(getPosts(posts)))
+   }
+ }
+
+ export function getPostById (postId) {
+   return {
+     type: DETAIL_POST,
+     postId
+   }
+ }
+ export function fetchPostById (idPost) {
+   return dispatch => {
+     postsAPI
+      .details(idPost)
+      .then(post => dispatch(getPostById(post)))
    }
  }
 
@@ -34,11 +47,39 @@ export const DETAIL_POST = 'DETAIL_POST'
       idPost,
    }
  }
-
  export function fetchRemovePost (post) {
   return dispatch => {
     postsAPI
       .remove(post)
       .then(post => dispatch(removePost(post.id)))
   }
+ }
+
+ export function addPost (newPost) {
+   return {
+     type: ADD_POST,
+     newPost
+   }
+ }
+ export function fetchAddPost (post) {
+   return dispatch => {
+     postsAPI
+      .create(post)
+      .then(post => dispatch(addPost(post)))
+   }
+ }
+
+ export function editPost (editPost) {
+   return {
+     type: EDIT_POST,
+     editPost
+   }
+ }
+
+ export function fetchEditPost (post) {
+   return dispatch => {
+     postsAPI
+      .edit(post)
+      .then(post => dispatch(editPost(post)))
+   }
  }

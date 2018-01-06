@@ -16,8 +16,13 @@ class App extends Component {
             <ListPosts key={generateKey()} />
           ]
         )}/>
+        <Route path="/posts/:id" render={(match) => (
+          <CreatePost edit={true} {...match}/>
+        )}/>       
         <Route path="/createPost" render={() => (
-          <CreatePost />
+          <CreatePost 
+            edit={false}
+          />
         )}/>       
       </div>
     )

@@ -1,6 +1,7 @@
 /**
  * @description Generate unique key
+ * @return {string}
  */
 export function generateKey () {
-  return new Date() + Math.random().toString(36).substr(-8)
+  return Date.now() + Math.random().toString(36).substr(-10)
 }

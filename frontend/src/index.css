@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/* taken of the app contact */
+.close-create-post {
+  display: block;
+  width: 60px;
+  height: 60px;
+  background-image: url('./Icons/arrow-back.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  font-size: 0;
+}

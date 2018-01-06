@@ -23,8 +23,7 @@ class ListPosts extends Component {
     return(
       <div>
         <h2 className="list-category-post">Posts</h2>        
-        {posts.posts.map((post, index) => (
-          
+        {posts.posts.map((post, index) => (          
           <div key={index} className="post">
             <div>
               <p><strong>Title:</strong> {post.title}</p>
@@ -32,14 +31,18 @@ class ListPosts extends Component {
             </div>
             <div>
               <p><FaCommentO size={25}/>{post.commentCount}</p>
-              <Link to={{ pathname: '/editPost'}} >
+              <Link to={{
+                pathname: `/posts/${post.id}`
+              }}>
                 Edit
+              </Link>
+              <Link to="/createPost">
+                Add
               </Link>
               <button onClick={() => removePost(post)}>Delete</button>
             </div>
           </div>          
-        ))}
-        
+        ))}        
       </div>
     )
   }

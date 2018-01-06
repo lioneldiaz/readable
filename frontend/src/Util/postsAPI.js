@@ -27,14 +27,20 @@ export const create = (post) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    post: JSON.stringify(post)
+    body: JSON.stringify(post)
   }).then(result => result.json())
 
 export const edit = (post) =>
-  fetch(`${api}/posts/${post.id}`, { method: 'PUT', headers})
-    .then(result => result.json())
+  fetch(`${api}/posts/${post.id}`, { 
+    method: 'PUT', 
+    headers:{
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(post)
+  }).then(result => result.json())
 
-export const detail = (id) =>
+export const details = (id) =>
   fetch(`${api}/posts/${id}`, { headers })
     .then(result => result.json())
     .then(data => data)
