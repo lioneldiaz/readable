@@ -72,7 +72,9 @@ export const DETAIL_POST = 'DETAIL_POST'
  export function editPost (editPost) {
    return {
      type: EDIT_POST,
-     editPost
+     id: editPost.id,
+     title: editPost.title,
+     body: editPost.body
    }
  }
 

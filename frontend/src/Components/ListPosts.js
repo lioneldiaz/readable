@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 class ListPosts extends Component {
   /**
-   * @description Validate the props declared
+   * @description Validate of the data types passed to the component
    */
   static propTypes = {
     posts: PropTypes.object.isRequired
@@ -16,7 +16,8 @@ class ListPosts extends Component {
    * @description Invoke immediately after the component is inserted in the DOM
    */
   componentDidMount () {
-    this.props.getPosts()
+    this.props.posts.posts.length === 0 && this.props.getPosts()
+    //this.props.getPosts()
   }
   render(){
     const { posts, removePost } = this.props    
@@ -32,7 +33,8 @@ class ListPosts extends Component {
             <div>
               <p><FaCommentO size={25}/>{post.commentCount}</p>
               <Link to={{
-                pathname: `/posts/${post.id}`
+                pathname: `/posts/${post.id}`,
+                state: {h: true}
               }}>
                 Edit
               </Link>

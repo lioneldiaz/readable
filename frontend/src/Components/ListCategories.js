@@ -14,7 +14,7 @@ class ListCategories extends Component {
    * @description Invoke immediately after the component is inserted in the DOM
    */
   componentDidMount () {
-    this.props.getCategories()
+    this.props.categories.categories.length === 0 && this.props.getCategories()
   }
   render(){
     const { categories } = this.props

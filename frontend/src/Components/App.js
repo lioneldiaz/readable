@@ -9,19 +9,20 @@ import '../App.css'
 class App extends Component { 
   render(){  
     return(
-      <div>
+      <div className="container">
         <Route exact path="/" render={() => (
           [ 
             <ListCategories key={generateKey()} />,
             <ListPosts key={generateKey()} />
           ]
         )}/>
-        <Route path="/posts/:id" render={(match) => (
+        <Route exact path="/posts/:id" render={(match) => (
           <CreatePost edit={true} {...match}/>
         )}/>       
-        <Route path="/createPost" render={() => (
+        <Route exact path="/createPost" render={(match) => (
           <CreatePost 
             edit={false}
+            {...match}
           />
         )}/>       
       </div>
