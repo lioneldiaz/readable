@@ -17,34 +17,41 @@ class ListPosts extends Component {
    */
   componentDidMount () {
     this.props.posts.posts.length === 0 && this.props.getPosts()
-    //this.props.getPosts()
-  }
+  } 
   render(){
-    const { posts, removePost } = this.props    
+    const {posts, removePost}=this.props    
     return(
       <div>
         <h2 className="list-category-post">Posts</h2>        
         {posts.posts.map((post, index) => (          
-          <div key={index} className="post">
-            <div>
+          <div key={index} className="post" >
+            <div className="post-pointer">
               <p><strong>Title:</strong> {post.title}</p>
               <p><strong>Author:</strong> {post.author}</p>
-            </div>
-            <div>
-              <p><FaCommentO size={25}/>{post.commentCount}</p>
               <Link to={{
-                pathname: `/posts/${post.id}`,
-                state: {h: true}
+                pathname: `/${post.category}/${post.id}`
+              }}>
+                Details
+              </Link>
+            </div>            
+            <div className="list-separator-post">
+              <a className="button-post-delete list-element-post post-pointer" onClick={() => removePost(post)}>Delete</a>
+              
+              <Link to={{
+                pathname: `/posts/${post.id}`
               }}>
                 Edit
               </Link>
+              
+              <a className="list-element-post"><FaCommentO size={20}/>{post.commentCount}</a>
+            </div>  
+          </div>       
+        ))}
+        <div>
               <Link to="/createPost">
                 Add
               </Link>
-              <button onClick={() => removePost(post)}>Delete</button>
-            </div>
-          </div>          
-        ))}        
+            </div>          
       </div>
     )
   }

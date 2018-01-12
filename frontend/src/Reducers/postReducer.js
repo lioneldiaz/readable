@@ -3,7 +3,8 @@ import {
   REMOVE_POST,
   ADD_POST,
   DETAIL_POST,
-  EDIT_POST
+  EDIT_POST,
+  UPDATE_NUMBER_COMMENT
 } from '../Actions/postAction'
 
 /**
@@ -53,6 +54,13 @@ export function posts (state = initialPosts, action) {
                 post.id === id && ( post.title = title, post.body = body )
                 return post
                 })
+      }
+    case UPDATE_NUMBER_COMMENT :
+      const { idPostComment, typeUpdate } = action
+      return {
+        ...state,
+        post: {...state.post, ...state.post.id === idPostComment && (
+          typeUpdate === 'increase' ? state.post.commentCount++ :state.post.commentCount--)}
       }
     default:
       return state

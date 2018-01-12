@@ -4,10 +4,11 @@ import ListCategories from './ListCategories'
 import ListPosts from './ListPosts'
 import { generateKey } from '../Util/helpers'
 import CreatePost from './CreatePost'
+import DetailsPost from './DetailsPost'
 import '../App.css'
 
 class App extends Component { 
-  render(){  
+  render(){
     return(
       <div className="container">
         <Route exact path="/" render={() => (
@@ -19,12 +20,17 @@ class App extends Component {
         <Route exact path="/posts/:id" render={(match) => (
           <CreatePost edit={true} {...match}/>
         )}/>       
-        <Route exact path="/createPost" render={(match) => (
+        <Route path="/createPost" render={(match) => (
           <CreatePost 
             edit={false}
             {...match}
           />
-        )}/>       
+        )}/>
+        <Route exact path="/:category/:id" render={(match) => (
+          <DetailsPost 
+            {...match}
+          />
+        )}/>      
       </div>
     )
   }

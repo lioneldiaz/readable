@@ -10,3 +10,30 @@
   border-left: 6px solid rgb(0, 174, 255);
   background: #f7f5f5;
 }
+.list-separator-post {
+  padding: 10px;
+  border-top: 1px solid #dedede;
+  
+}
+.button-post-delete {
+  border: 1px solid red;
+  border-radius: 5px;
+  background: #f7f5f5;
+}
+.button-post-edit {
+  border: 1px solid #02e9fa;
+  border-radius: 5px;
+  background: #f7f5f5;
+}
+.list-element-post {
+  float: right;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-left: 10px;
+}
+.number-comment {
+  padding: 5px;
+}
+.post-pointer {
+  cursor: pointer; 
+}

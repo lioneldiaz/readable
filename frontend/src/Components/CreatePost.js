@@ -13,11 +13,12 @@ class CreatePost extends Component {
    * @param {props} props 
    */
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
-      valueCategory: 'select',
-      title: props.title,
-      body: props.body
+      id: props.edit ? props.posts.post.id :generateKey(),
+      title: props.edit ? props.posts.post.title :props.title,
+      body: props.edit ? props.posts.post.body :props.body,
+      category: 'select'
     }
   }
   /**
@@ -39,7 +40,7 @@ class CreatePost extends Component {
     this.props.history.push('/')
   }
   /**
-   * @description Change the value of each state declared in the constructor
+   * @description Change the value of each element in the form
    */
   handleChange = (event) => {
     const target = event.target
@@ -67,24 +68,23 @@ class CreatePost extends Component {
     this.props.edit && this.props.getPostById(this.props.match.params.id)     
   }
   render() {
-    const {categories, posts, edit}=this.props
-    const p=posts.post
+    const {categories, edit}=this.props    
     return (  
       <div>
         <Link className="close-create-post" to="/">Close</Link> 
         <form onSubmit={this.handleSubmit}>
-          <div className="create-contact-details">
-            <input hidden={true} type="text" name="id" value={edit ? p.id :generateKey()} onChange={this.handleChange} />
-            <input hidden={true} type="text" name="timestamp" value={edit ? p.timestamp :Date.now()} onChange={this.handleChange}/>
-            <input name="title" type="text" placeholder="Title" value={this.state.title} onChange={this.handleChange}/>
-            <textarea name = "body" placeholder = "Body" value={this.state.body} onChange={this.handleChange}/> 
-            <input hidden={edit ? true :false} type="text" name="author" placeholder="Author" value={this.props.author} onChange={this.handleChange}/>
-            <select hidden={edit ? true :false} name="valueCategory" value={this.state.valueCategory} onChange={this.handleChange} >
-              <option value="select" disabled>--Select--</option>
-              {categories.categories.map((category, index) => (
-                <option key={index} value={this.state.category}>{category.name}</option>
-              ))}              
-            </select>           
+          <div className="create-contact-details">  
+          <input hidden={true} type="text" name="id" value={this.state.id} onChange={this.handleChange}/>
+          <input hidden={true} type="text" name="timestamp" value={Date.now()} onChange={this.handleChange}/>
+          <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleChange}/>  
+          <textarea name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange}/> 
+          <input hidden={edit ? true :false} type="text" name="author" placeholder="Author" value={this.props.author} onChange={this.handleChange}/>
+          <select hidden={edit ? true :false} name="category" value={this.state.category} onChange={this.handleChange} >
+            <option value="select" disabled>--Select--</option>
+            {categories.categories.map((category, index) => (
+              <option key={index} value={this.props.category}>{category.name}</option>
+            ))}              
+          </select>           
             <button>{edit ? "Edit" :"Save"}</button>
           </div>
         </form>    

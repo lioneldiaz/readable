@@ -9,6 +9,7 @@ export const ADD_POST = 'ADD_POST'
 export const EDIT_POST = 'EDIT_POST'
 export const REMOVE_POST = 'REMOVE_POST'
 export const DETAIL_POST = 'DETAIL_POST'
+export const UPDATE_NUMBER_COMMENT = 'UPDATE_NUMBER_COMMENT'
 
 /**
  * @description Action creators
@@ -77,11 +78,18 @@ export const DETAIL_POST = 'DETAIL_POST'
      body: editPost.body
    }
  }
-
  export function fetchEditPost (post) {
    return dispatch => {
      postsAPI
       .edit(post)
       .then(post => dispatch(editPost(post)))
+   }
+ }
+
+ export function updateNumberComment (idPostComment, typeUpdate) {
+   return {
+     type: UPDATE_NUMBER_COMMENT,
+     idPostComment,
+     typeUpdate
    }
  }
