@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { fetchPosts, fetchRemovePost } from '../Actions/postAction'
-import FaCommentO from 'react-icons/lib/fa/comment-o'
+import { fetchPosts, fetchRemovePost, fetchUpDownVotePost } from '../../Actions/postAction'
 import { Link } from 'react-router-dom'
+import Post from './Post'
 
 class ListPosts extends Component {
   /**
@@ -19,39 +19,18 @@ class ListPosts extends Component {
     this.props.posts.posts.length === 0 && this.props.getPosts()
   } 
   render(){
-    const {posts, removePost}=this.props    
+    const {posts, removePost, votePost}=this.props    
     return(
       <div>
         <h2 className="list-category-post">Posts</h2>        
         {posts.posts.map((post, index) => (          
-          <div key={index} className="post" >
-            <div className="post-pointer">
-              <p><strong>Title:</strong> {post.title}</p>
-              <p><strong>Author:</strong> {post.author}</p>
-              <Link to={{
-                pathname: `/${post.category}/${post.id}`
-              }}>
-                Details
-              </Link>
-            </div>            
-            <div className="list-separator-post">
-              <a className="button-post-delete list-element-post post-pointer" onClick={() => removePost(post)}>Delete</a>
-              
-              <Link to={{
-                pathname: `/posts/${post.id}`
-              }}>
-                Edit
-              </Link>
-              
-              <a className="list-element-post"><FaCommentO size={20}/>{post.commentCount}</a>
-            </div>  
-          </div>       
+          <Post key={index} post={post} onVote={votePost} removePost={removePost}/>     
         ))}
         <div>
-              <Link to="/createPost">
-                Add
-              </Link>
-            </div>          
+          <Link to="/createPost">
+            Add
+          </Link>
+        </div>          
       </div>
     )
   }
@@ -75,6 +54,7 @@ function mapDispatchToProps (dispatch) {
   return {
     getPosts: () => dispatch(fetchPosts(dispatch)),
     removePost: (data) => dispatch(fetchRemovePost(data)),
+    votePost: (idPost, option) => dispatch(fetchUpDownVotePost(idPost, option))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListPosts)

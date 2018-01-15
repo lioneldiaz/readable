@@ -2,7 +2,8 @@ import {
   GET_COMMENTS, 
   ADD_COMMENT,
   EDIT_COMMENT,
-  REMOVE_COMMENT
+  REMOVE_COMMENT,
+  UPDOWNVOTE
 } from '../Actions/commentAction'
 
 const initialComments = {
@@ -34,6 +35,15 @@ export function comments (state = initialComments, action) {
             )
             return comment
           })        
+      }
+    case UPDOWNVOTE :
+      const { idCommentVote, numberVoteScore } = action
+      return {
+        ...state,
+        comments: state.comments.map(comment => {
+          comment.id === idCommentVote && ( comment.voteScore = numberVoteScore)
+          return comment
+        })
       }
     case REMOVE_COMMENT :
       const { idComment } = action

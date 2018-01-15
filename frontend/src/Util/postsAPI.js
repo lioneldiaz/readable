@@ -45,6 +45,17 @@ export const details = (id) =>
     .then(result => result.json())
     .then(data => data)
 
+export const vote = (idPost, option) =>
+  fetch(`${api}/posts/${idPost}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({option})
+  }).then(result => result.json())
+    .then(data => data)
+
 export const remove = (post) =>
   fetch(`${api}/posts/${post.id}`, { method: 'DELETE', headers })
     .then(result => result.json())

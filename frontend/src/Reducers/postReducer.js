@@ -4,7 +4,8 @@ import {
   ADD_POST,
   DETAIL_POST,
   EDIT_POST,
-  UPDATE_NUMBER_COMMENT
+  UPDATE_NUMBER_COMMENT,
+  UPDOWNVOTE
 } from '../Actions/postAction'
 
 /**
@@ -54,6 +55,15 @@ export function posts (state = initialPosts, action) {
                 post.id === id && ( post.title = title, post.body = body )
                 return post
                 })
+      }
+    case UPDOWNVOTE :
+      const { numberVote, idPostVote } = action
+      return {
+        ...state,
+        posts: state.posts.map(post => {
+                post.id === idPostVote && ( post.voteScore = numberVote )
+                return post
+               })
       }
     case UPDATE_NUMBER_COMMENT :
       const { idPostComment, typeUpdate } = action

@@ -2,10 +2,20 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchPostById, fetchRemovePost, updateNumberComment } from '../Actions/postAction'
-import { fetchComments, fetchAddComment, fetchRemoveComment, fetchEditComment } from '../Actions/commentAction'
-import FaCommentO from 'react-icons/lib/fa/comment-o'
-import CreateComment from '../Components/Comment/CreateComment'
+import { 
+  fetchPostById,
+  fetchRemovePost,
+  updateNumberComment,
+  fetchUpDownVotePost } from '../../Actions/postAction'
+import { 
+  fetchComments,
+  fetchAddComment,
+  fetchRemoveComment,
+  fetchEditComment,
+  fetchUpDownVoteComment } from '../../Actions/commentAction'
+import CreateComment from '../../Components/Comment/CreateComment'
+import Post from './Post'
+import Comment from '../Comment/Comment'
 
 class DetailsPost extends Component {
   /**
@@ -52,6 +62,14 @@ class DetailsPost extends Component {
     this.setState(() => ({ editComment: true, idComment }))
   }
   /**
+   * @description Remove the post
+   * @param {Object} post
+   */
+  onRemovePost = (post) => {
+    this.props.removePost(post)
+    this.props.history.push('/')
+  }
+  /**
    * @description Invoke immidiately after the component is inserted in the DOM
    */
   componentDidMount () {
@@ -60,46 +78,32 @@ class DetailsPost extends Component {
     this.props.getComments(id)
   }
   render () {
-    const {post, removePost, comments, onEditComment}=this.props
+    const {post, comments, onEditComment, votePost, voteComment}=this.props
     const {newComment, editComment, idComment}=this.state
     return (
-      <div>        
-        <div className="post" >
-          <div className="post-pointer" onClick={this.handleClick}>
-            <p><strong>Title:</strong> {post.title}</p>
-            <p><strong>Title:</strong> {post.body}</p>
-            <p><strong>Author:</strong> {post.author}</p>
-          </div>            
-          <div className="list-separator-post">
-            <a className="button-post-delete list-element-post post-pointer" onClick={() => removePost(post)}>Delete</a>         
-            <Link to={{
-              pathname: `/posts/${post.id}`
-            }}>
-              Edit
-            </Link>         
-            <a className="list-element-post"><FaCommentO size={20}/>{post.commentCount}</a>
-          </div>  
-        </div>
+      <div>
+        <Link className="close-create-post" to="/">Back</Link> 
+        <Post
+          post={post}
+          onVote={votePost}
+        />
         <div>
           <div>
-            {comments.comments.map((comment, index) => (
-              <div key={index} className="post">
-                <p><strong>Body:</strong> {comment.body}</p>
-                <p><strong>Author:</strong> {comment.author}</p>
-                {editComment && comment.id === idComment && (
-                  <CreateComment 
-                    edit={true}
-                    objComment={comment}
-                    onEditComment={onEditComment}
-                    onCloseForm={this.closeComment}
-                  />
-                )}
-                <div>
-                  <a className="button-post-delete list-element-post post-pointer" onClick={() => this.onRemoveComment(comment)}>Delete</a>         
-                  <a className="button-post-delete list-element-post post-pointer" onClick={() => this.openEditComment(comment.id)}>Edit</a>
-                </div> 
-              </div>              
-            ))}             
+            <ul>
+              {comments.comments.map((comment, index) => (              
+                <Comment 
+                  key={index}
+                  comment={comment}
+                  onRemoveComment={this.onRemoveComment}
+                  voteComment={voteComment}
+                  openEditComment={this.openEditComment}
+                  editComment={editComment}
+                  idComment={idComment}
+                  onEditComment={onEditComment}
+                  onCloseForm={this.closeComment}
+                />        
+              ))} 
+            </ul>             
           </div>         
           <div>
             <a className="button-post-delete list-element-post post-pointer" onClick={this.openAddComment}>New comment</a>
@@ -131,7 +135,9 @@ function mapDispatchToProps (dispatch) {
     addComment: (data) => dispatch(fetchAddComment(data)),
     removeComment: (data) => dispatch(fetchRemoveComment(data)),
     updateNumberComment: (idPost, typeUpdate) => dispatch(updateNumberComment(idPost, typeUpdate)),
-    onEditComment: (comment) => dispatch(fetchEditComment(comment))
+    onEditComment: (comment) => dispatch(fetchEditComment(comment)),
+    votePost: (idPost, option) => dispatch(fetchUpDownVotePost(idPost, option)),
+    voteComment: (idComment, option) => dispatch(fetchUpDownVoteComment(idComment, option))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DetailsPost)

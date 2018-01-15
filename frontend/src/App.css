@@ -31,9 +31,59 @@
   padding-left: 10px;
   margin-left: 10px;
 }
-.number-comment {
-  padding: 5px;
-}
 .post-pointer {
   cursor: pointer; 
 }
+
+/* upvote and downvote */
+.thumb-vote {
+  background-color:rgb(0, 174, 255);
+  color: white;
+  border-radius: 180px;
+}
+.thumb:hover {
+  background-color:rgb(0, 174, 255);
+  color: white;
+  border-radius: 180px;
+}
+.thumb-negative {
+  color: white;
+  background-color: red;
+  border-radius: 180px;
+}
+
+/* comment number and vote */
+.comment-number {
+  color: #b9b9b9;
+  padding-right: 5px;
+}
+.vote-number {
+  padding-right: 5px;
+}
+.trash {
+  color: #b9b9b9;
+}
+.trash-hover :hover {
+  color: rgb(240, 46, 46);
+}
+
+/* edit comment and post */
+.edit-hover :hover {
+  color: rgb(6, 127, 240);
+}
+
+/* comment */
+.user-comment {
+  background-image: url('./Icons/person.svg');
+  background-color: #02e9fa;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border-radius: 50%;
+  float: left;
+}
+
+.p-comment {
+  padding-left: 10px;
+}
+

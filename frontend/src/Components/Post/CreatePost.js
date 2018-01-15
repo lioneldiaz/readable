@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import PropTypes from 'prop-types'
-import { fetchAddPost, fetchPostById, fetchEditPost } from '../Actions/postAction'
-import { fetchCategories } from '../Actions/categoryAction'
-import { generateKey } from '../Util/helpers'
+import { fetchAddPost, fetchPostById, fetchEditPost } from '../../Actions/postAction'
+import { fetchCategories } from '../../Actions/categoryAction'
+import { generateKey } from '../../Util/helpers'
 
 class CreatePost extends Component {
   /**
@@ -71,7 +71,7 @@ class CreatePost extends Component {
     const {categories, edit}=this.props    
     return (  
       <div>
-        <Link className="close-create-post" to="/">Close</Link> 
+        <Link className="close-create-post" to="/">Close</Link>
         <form onSubmit={this.handleSubmit}>
           <div className="create-contact-details">  
           <input hidden={true} type="text" name="id" value={this.state.id} onChange={this.handleChange}/>

@@ -18,7 +18,8 @@ class CreateComment extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault()
-    const comment = serializeForm(event.target, { hash: true})    
+    const comment = serializeForm(event.target, { hash: true})
+    console.log("Comment",comment)  
     !this.props.edit
       ? this.props.onAddComment(comment)  
       : this.props.onEditComment(comment)
@@ -36,12 +37,13 @@ class CreateComment extends Component {
     }))
   }
   render () {
+    console.log("Props", this.props)
     const {objComment, edit, onCloseForm}=this.props
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <input hidden={true} type="text" name="id" value={edit ? objComment.id : generateKey()} onChange={this.handleChange}/>
-          <input hidden={true} type="text" name="timestamp" value={Date.now()} onChange={this.handleChange}/>
+          <input hidden={true} type="number" name="timestamp" value={Date.now()} onChange={this.handleChange}/>
           <textarea name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange} />
           <input hidden={edit ? true : false} type="text" name="author" placeholder="Author" onChange={this.handleChange} />
           <input hidden={true} type="text" name="parentId" value={this.props.idPost} onChange={this.handleChange}/>
@@ -52,5 +54,4 @@ class CreateComment extends Component {
     )
   }
 }
-
 export default CreateComment

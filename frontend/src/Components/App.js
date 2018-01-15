@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-import ListCategories from './ListCategories'
-import ListPosts from './ListPosts'
+import ListCategories from './Category/ListCategories'
+import ListPosts from './Post/ListPosts'
 import { generateKey } from '../Util/helpers'
-import CreatePost from './CreatePost'
-import DetailsPost from './DetailsPost'
+import CreatePost from './Post/CreatePost'
+import DetailsPost from './Post/DetailsPost'
 import '../App.css'
 
 class App extends Component { 
@@ -17,16 +17,16 @@ class App extends Component {
             <ListPosts key={generateKey()} />
           ]
         )}/>
-        <Route exact path="/posts/:id" render={(match) => (
+        <Route exact strict path="/posts/:id" render={(match) => (
           <CreatePost edit={true} {...match}/>
         )}/>       
-        <Route path="/createPost" render={(match) => (
-          <CreatePost 
+        <Route exact strict path="/createPost" render={(match) => (
+          <CreatePost
             edit={false}
             {...match}
           />
         )}/>
-        <Route exact path="/:category/:id" render={(match) => (
+        <Route exact strict path="/:category/:id" render={(match) => (
           <DetailsPost 
             {...match}
           />

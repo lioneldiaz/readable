@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { fetchCategories } from '../Actions/categoryAction'
+import { fetchCategories } from '../../Actions/categoryAction'
 
 class ListCategories extends Component {
   /**
@@ -17,7 +17,7 @@ class ListCategories extends Component {
     this.props.categories.categories.length === 0 && this.props.getCategories()
   }
   render(){
-    const { categories } = this.props
+    const {categories}=this.props
     return(
       <div>
         <h2 className="list-category-post">Categories</h2>

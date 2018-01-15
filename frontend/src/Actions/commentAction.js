@@ -6,10 +6,26 @@ export const GET_COMMENTS = 'GET_COMMENTS'
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const REMOVE_COMMENT = 'REMOVE_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
+export const UPDOWNVOTE = 'UPDOWNVOTE'
 
 /**
  * @description Action creators
  */
+export function upDownVote (idCommentVote, numberVoteScore) {
+  return {
+    type: UPDOWNVOTE,
+    idCommentVote,
+    numberVoteScore
+  }
+}
+export function fetchUpDownVoteComment (idComment, option) {
+  return dispatch => {
+    commentsAPI
+      .vote(idComment, option)
+      .then(comment => dispatch(upDownVote(comment.id, comment.voteScore)))
+  }
+}
+
 export function getComments (comments) {
   return {
     type: GET_COMMENTS,
