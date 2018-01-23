@@ -1,12 +1,8 @@
-import { GET_CATEGORIES } from '../Actions/categoryAction'
-
+import { GET_CATEGORIES } from '../Constans/ActionTypesComment'
 /**
  * @description Initial state for all of categories
  */
-const initailCategories = {
-  categories: []
-}
-
+const initailCategories = {}
 /**
  * @description Reducer for category
  * @param {Object} state - Contains information about the categories
@@ -15,10 +11,10 @@ const initailCategories = {
 export function categories(state = initailCategories, action){
   switch (action.type) {
     case GET_CATEGORIES:
-      const { categories } = action
+      const { categories } = action      
       return {
         ...state,
-        categories
+        ...categories
       }  
     default:
       return state

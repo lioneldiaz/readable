@@ -1,57 +1,63 @@
 import { 
-  GET_COMMENTS, 
+  GET_COMMENTS,
   ADD_COMMENT,
   EDIT_COMMENT,
   REMOVE_COMMENT,
   UPDOWNVOTE
-} from '../Actions/commentAction'
-
-const initialComments = {
-  comments: []
+} from '../Constans/ActionTypesComment'
+/**
+ * @description Initial state for all of comments
+ */
+const initialComments = {}
+function updateObject (oldObject, newValues) {
+  return {
+    ...oldObject,
+    ...newValues
+  }
 }
+function getComments (state, action) {
+  const { comments } = action
+  state = {}
+  return updateObject(state, comments)
+}
+function addComment (state, action) {
+  const { newComment } = action
+  const comment = {
+    ...state.comments, [newComment.id]: newComment
+  }
+  return updateObject(state, comment)
+}
+function editComment (state, action) {
+  const { idEditComment, timestampEditComment, bodyEditComment } = action
+  state[idEditComment].body = bodyEditComment
+  state[idEditComment].timestamp = timestampEditComment
+  const comment = { ...state.comments }
+  return updateObject(state, comment)
+}
+function removeComment (state, action) {
+  const { idComment } = action
+  delete state[idComment]
+  const comment = { ...state.comments }
+  return updateObject(state, comment)
+}
+function upDownVote (state, action) {
+  const { idCommentVote, numberVoteScore } = action
+  state[idCommentVote].voteScore = numberVoteScore
+  const comment = { ...state.comments }
+  return updateObject(state, comment)
+}
+/**
+ * @description Reducer for comment
+ * @param {Object} state - Contains information about the comments
+ * @param {Object} action - Contains information about what action is executed
+ */
 export function comments (state = initialComments, action) {
   switch (action.type) {
-    case GET_COMMENTS :
-    const { comments } = action
-      return {
-        ...state,
-        comments
-      }
-    case ADD_COMMENT :
-      const { newComment } = action
-      return {
-        ...state,
-        comments: [...state.comments, newComment]
-      }
-    case EDIT_COMMENT :
-      const { idEditComment, timestampEditComment, bodyEditComment } = action
-      return {
-        ...state,
-        comments: state.comments.map(comment => 
-          {
-            comment.id === idEditComment && (
-              comment.timestamp = timestampEditComment,
-              comment.body = bodyEditComment
-            )
-            return comment
-          })        
-      }
-    case UPDOWNVOTE :
-      const { idCommentVote, numberVoteScore } = action
-      return {
-        ...state,
-        comments: state.comments.map(comment => {
-          comment.id === idCommentVote && ( comment.voteScore = numberVoteScore)
-          return comment
-        })
-      }
-    case REMOVE_COMMENT :
-      const { idComment } = action
-      return {
-        ...state,
-        comments: [...state.comments.filter(comment => comment.id !==  idComment)]
-      }
-    default :
-      return state
+    case GET_COMMENTS : return getComments (state, action)
+    case ADD_COMMENT : return addComment (state, action)
+    case EDIT_COMMENT : return editComment (state, action)
+    case UPDOWNVOTE : return upDownVote (state, action)
+    case REMOVE_COMMENT : return removeComment (state, action)  
+    default : return state
   }
 }

@@ -43,7 +43,7 @@ class DetailsPost extends Component {
    */
   onAddComment = (comment) => {
     this.props.addComment(comment)
-    this.props.updateNumberComment(this.props.match.params.id,'increase')
+    this.props.updateNumberComment(this.props.match.params.post_id,'increase')
   }
   /**
    * @description Delete any comment and update the comment number
@@ -51,7 +51,7 @@ class DetailsPost extends Component {
    */
   onRemoveComment = (comment) => {
     this.props.removeComment(comment)
-    this.props.updateNumberComment(this.props.match.params.id,'decrease')
+    this.props.updateNumberComment(this.props.match.params.post_id,'decrease')
   }
   /**
    * @description Allow show the form EditComment
@@ -73,36 +73,45 @@ class DetailsPost extends Component {
    * @description Invoke immidiately after the component is inserted in the DOM
    */
   componentDidMount () {
-    const id = this.props.match.params.id
+    const id = this.props.match.params.post_id    
     this.props.getPostById(id)
     this.props.getComments(id)
   }
-  render () {
-    const {post, comments, onEditComment, votePost, voteComment}=this.props
-    const {newComment, editComment, idComment}=this.state
+  render () {    
+    const {post, comments, onEditComment, votePost, voteComment}=this.props    
+    const {newComment, editComment, idComment}=this.state    
     return (
       <div>
-        <Link className="close-create-post" to="/">Back</Link> 
-        <Post
-          post={post}
-          onVote={votePost}
-        />
+        <Link className="close-create-post" 
+        to={{
+          pathname: "/"
+        }}
+        >Back</Link>
+        {typeof post === 'object' &&
+          <Post
+            post={post}
+            onVote={votePost}
+            onRemovePost={this.onRemovePost}
+            typeVote={"postDetails"}
+          />
+        }        
         <div>
           <div>
             <ul>
-              {comments.comments.map((comment, index) => (              
-                <Comment 
-                  key={index}
-                  comment={comment}
-                  onRemoveComment={this.onRemoveComment}
-                  voteComment={voteComment}
-                  openEditComment={this.openEditComment}
-                  editComment={editComment}
-                  idComment={idComment}
-                  onEditComment={onEditComment}
-                  onCloseForm={this.closeComment}
-                />        
-              ))} 
+              {comments.map((comment, index) => (                                                     
+                  <Comment 
+                    key={index}
+                    comment={comment}
+                    onRemoveComment={this.onRemoveComment}
+                    voteComment={voteComment}
+                    openEditComment={this.openEditComment}
+                    editComment={editComment}
+                    idComment={idComment}
+                    onEditComment={onEditComment}
+                    onCloseForm={this.closeComment}
+                  />    
+                ))
+              } 
             </ul>             
           </div>         
           <div>
@@ -111,7 +120,7 @@ class DetailsPost extends Component {
               <CreateComment 
                 onCloseForm={this.closeComment}
                 onAddComment={this.onAddComment}
-                idPost={this.props.match.params.id}
+                idPost={this.props.match.params.post_id}
                 edit={false}
               />
             )}       
@@ -121,12 +130,23 @@ class DetailsPost extends Component {
     )
   }
 }
-function mapStateToProps (state) {
+/**
+ * @description Specify which data from the store you passed to your React component
+ * @param {Object} comments
+ * @param {Object} posts
+ * @return {Object}
+ */
+function mapStateToProps ({comments, posts}) {  
   return {
-    post: state.posts.post,
-    comments: state.comments
+    post: posts.postDetails,
+    comments: Object.keys(comments).map(key => comments[key])
   }
 }
+/**
+ * @description Bind dispatch to your action creators before they ever hit your component
+ * @param {function} dispatch
+ * @return {Object}
+ */
 function mapDispatchToProps (dispatch) {
   return {
     getPostById: (idPost) => dispatch(fetchPostById(idPost)),
@@ -136,7 +156,7 @@ function mapDispatchToProps (dispatch) {
     removeComment: (data) => dispatch(fetchRemoveComment(data)),
     updateNumberComment: (idPost, typeUpdate) => dispatch(updateNumberComment(idPost, typeUpdate)),
     onEditComment: (comment) => dispatch(fetchEditComment(comment)),
-    votePost: (idPost, option) => dispatch(fetchUpDownVotePost(idPost, option)),
+    votePost: (idPost, option, typeVote) => dispatch(fetchUpDownVotePost(idPost, option, typeVote)),
     voteComment: (idComment, option) => dispatch(fetchUpDownVoteComment(idComment, option))
   }
 }

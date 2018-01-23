@@ -1,13 +1,11 @@
 import * as commentsAPI from '../Util/commentsAPI'
-/**
- * @description Action types
- */
-export const GET_COMMENTS = 'GET_COMMENTS'
-export const ADD_COMMENT = 'ADD_COMMENT'
-export const REMOVE_COMMENT = 'REMOVE_COMMENT'
-export const EDIT_COMMENT = 'EDIT_COMMENT'
-export const UPDOWNVOTE = 'UPDOWNVOTE'
-
+import { 
+  GET_COMMENTS,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  EDIT_COMMENT,
+  UPDOWNVOTE
+} from '../Constans/ActionTypesComment'
 /**
  * @description Action creators
  */
@@ -26,7 +24,9 @@ export function fetchUpDownVoteComment (idComment, option) {
   }
 }
 
-export function getComments (comments) {
+export function getComments (objComments) {
+  let comments = {}
+  Object.keys(objComments).map(key => comments[objComments[key].id] = objComments[key])
   return {
     type: GET_COMMENTS,
     comments

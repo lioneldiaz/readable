@@ -7,7 +7,7 @@ import FaTrashO from 'react-icons/lib/fa/trash-o'
 import FaEdit from 'react-icons/lib/fa/edit'
 import { convertDate } from '../../Util/helpers'
 
-const Post = ({post, onVote, removePost}) => {
+const Post = ({post, onVote, onRemovePost, typeVote, typeRemove}) => {
   return (
     <div className="post" >
       <div className="post-pointer">
@@ -22,9 +22,9 @@ const Post = ({post, onVote, removePost}) => {
         </Link>
       </div>            
       <div className="list-separator-post">
-        <a className="list-element-post post-pointer" onClick={() => removePost(post)}><FaTrashO className="trash trash-hover" size={20}/></a>
+        <a className="list-element-post post-pointer" onClick={() => onRemovePost(post, typeRemove)}><FaTrashO className="trash trash-hover" size={20}/></a>
         <Link to={{
-          pathname: `/posts/${post.id}`
+          pathname: `/posts/edit/${post.id}`
         }}>
           <FaEdit size={20}/>
         </Link>               
@@ -35,8 +35,8 @@ const Post = ({post, onVote, removePost}) => {
             : <i className="vote-number"><FaThumbsODown size={20} className="thumb-negative" />{post.voteScore}</i>
           }         
         </a>
-        <a className="list-element-post post-pointer" onClick={() => onVote(post.id, "downVote")}><FaThumbsODown className="trash thumb" size={20}/></a>
-        <a className="list-element-post post-pointer" onClick={() => onVote(post.id, "upVote")}><FaThumbsOUp className="trash thumb" size={20}/></a>
+        <a className="list-element-post post-pointer" onClick={() => onVote(post.id, "downVote", typeVote)}><FaThumbsODown className="trash thumb" size={20}/></a>
+        <a className="list-element-post post-pointer" onClick={() => onVote(post.id, "upVote", typeVote)}><FaThumbsOUp className="trash thumb" size={20}/></a>
       </div>  
     </div>
   )

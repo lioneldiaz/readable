@@ -1,40 +1,42 @@
 import * as postsAPI from '../Util/postsAPI'
-
-/**
- * @description Action types
- */
-export const GET_POSTS = 'GET_POSTS'
-export const GET_POST_BY_CATEGORY = 'GET_POST_BY_CATEGORY'
-export const ADD_POST = 'ADD_POST'
-export const EDIT_POST = 'EDIT_POST'
-export const REMOVE_POST = 'REMOVE_POST'
-export const DETAIL_POST = 'DETAIL_POST'
-export const UPDATE_NUMBER_COMMENT = 'UPDATE_NUMBER_COMMENT'
-export const UPDOWNVOTE = 'UPDOWNVOTE'
-
+import { sortByDates } from '../Util/helpers'
+import {
+  GET_POSTS,
+  GET_POST_BY_CATEGORY,
+  ADD_POST,
+  EDIT_POST,
+  REMOVE_POST,
+  DETAIL_POST,
+  UP_DOWN_VOTE_POST,
+  UPDATE_NUMBER_COMMENT,
+  SORT_DATE
+} from '../Constans/ActionTypesComment'
 /**
  * @description Action creators
  */
-export function upDownVote (numberVote, idPostVote) {
+export function upDownVote (numberVote, idPostVote, typeVote) {
   return {
-    type: UPDOWNVOTE,
+    type: UP_DOWN_VOTE_POST,
     numberVote,
-    idPostVote
+    idPostVote,
+    typeVote
   }
 }
-export function fetchUpDownVotePost (post, option) {
+export function fetchUpDownVotePost (post, option, typeVote) {
   return dispatch => {
     postsAPI
       .vote(post, option)
-      .then(post => dispatch(upDownVote(post.voteScore, post.id)))
+      .then(post => dispatch(upDownVote(post.voteScore, post.id, typeVote)))
   }
 }
 
-export function getPosts (posts) {
-return {
-  type: GET_POSTS,
-  posts
-}
+export function getPosts (objPosts) {
+  let posts = {}
+  Object.keys(objPosts).map(key => posts[objPosts[key].id] = objPosts[key])
+  return {
+    type: GET_POSTS,
+    posts
+  }
 }
 export function fetchPosts () {
   return dispatch => {
@@ -44,7 +46,7 @@ export function fetchPosts () {
   }
 }
 
-export function getPostById (postId) {
+export function getPostById (postId) {  
   return {
     type: DETAIL_POST,
     postId
@@ -58,17 +60,18 @@ export function fetchPostById (idPost) {
   }
 }
 
-export function removePost (idPost) {
+export function removePost (idPost, typeRemove) {
   return {
     type: REMOVE_POST,
     idPost,
+    typeRemove
   }
 }
-export function fetchRemovePost (post) {
+export function fetchRemovePost (post, typeRemove) {
   return dispatch => {
     postsAPI
       .remove(post)
-      .then(post => dispatch(removePost(post.id)))
+      .then(post => dispatch(removePost(post.id, typeRemove)))
   }
 }
 
@@ -107,5 +110,33 @@ export function updateNumberComment (idPostComment, typeUpdate) {
     type: UPDATE_NUMBER_COMMENT,
     idPostComment,
     typeUpdate
+  }
+}
+
+export function sortDate (sortPosts) {
+  return {
+    type: SORT_DATE,
+    sortPosts
+  }
+}
+export function goSortDate (posts, typeSort, propertySort) {
+  return dispatch => {    
+    dispatch(sortDate(sortByDates(posts, typeSort, propertySort)))
+  }
+}
+
+export function getPostByCategory (posts) {
+  let postsByCategory = {}
+  Object.keys(posts).map(key => postsByCategory[posts[key].id] = posts[key])
+  return {
+    type: GET_POST_BY_CATEGORY,
+    postsByCategory
+  }
+}
+export function fetchPostByCategory (category) {
+  return dispatch => {
+    postsAPI
+      .getPostByCategory(category)
+      .then(posts => dispatch(getPostByCategory(posts)))
   }
 }

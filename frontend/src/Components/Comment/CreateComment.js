@@ -10,7 +10,8 @@ class CreateComment extends Component {
   constructor(props){
     super(props)
     this.state = {
-      body: props.edit ? props.objComment.body: props.body
+      body: props.edit ? props.objComment.body: props.body,
+      timestamp: Date.now()
     }
   }
   /**
@@ -18,10 +19,10 @@ class CreateComment extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault()
-    const comment = serializeForm(event.target, { hash: true})
-    console.log("Comment",comment)  
+    const comment = serializeForm(event.target, {hash: true})
+    comment.timestamp = this.state.timestamp   
     !this.props.edit
-      ? this.props.onAddComment(comment)  
+      ? this.props.onAddComment(comment) 
       : this.props.onEditComment(comment)
     this.props.onCloseForm()
   }
@@ -37,13 +38,12 @@ class CreateComment extends Component {
     }))
   }
   render () {
-    console.log("Props", this.props)
     const {objComment, edit, onCloseForm}=this.props
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <input hidden={true} type="text" name="id" value={edit ? objComment.id : generateKey()} onChange={this.handleChange}/>
-          <input hidden={true} type="number" name="timestamp" value={Date.now()} onChange={this.handleChange}/>
+          <input hidden={true} type="number" name="timestamp" value={this.state.timestamp} onChange={this.handleChange}/>
           <textarea name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange} />
           <input hidden={edit ? true : false} type="text" name="author" placeholder="Author" onChange={this.handleChange} />
           <input hidden={true} type="text" name="parentId" value={this.props.idPost} onChange={this.handleChange}/>

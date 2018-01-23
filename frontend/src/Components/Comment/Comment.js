@@ -4,6 +4,7 @@ import FaTrashO from 'react-icons/lib/fa/trash-o'
 import FaEdit from 'react-icons/lib/fa/edit'
 import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up'
 import FaThumbsODown from 'react-icons/lib/fa/thumbs-o-down'
+import FaSmileO from 'react-icons/lib/fa/smile-o'
 import { convertDate } from '../../Util/helpers'
 
 const Comment = ({
@@ -16,9 +17,8 @@ const Comment = ({
   onEditComment,
   onCloseForm  
 }) => {
-  return (
-  <li className="comment byuser comment-author-chriscoyier bypostauthor odd alt depth-2" id="li-comment-147038">
-   
+  return (    
+  <li className="comment byuser comment-author-chriscoyier bypostauthor odd alt depth-2" id="li-comment-147038"> 
   <div className="grid group comment-wrap" id="comment-147038">
     <div className="user-comment"/> 
     <div className="comment-body group grid-4-5">
@@ -52,6 +52,8 @@ const Comment = ({
         </a>
         <a className="list-element-post post-pointer" onClick={() => voteComment(comment.id, "downVote")}><FaThumbsODown className="trash thumb" size={20}/></a>
         <a className="list-element-post post-pointer" onClick={() => voteComment(comment.id, "upVote")}><FaThumbsOUp className="trash thumb" size={20}/></a>
+        <div className="list-element-post post-pointer">
+        </div>
       </div>
   </div>
   </li>

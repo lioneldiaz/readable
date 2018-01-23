@@ -5,17 +5,17 @@ import {
   DETAIL_POST,
   EDIT_POST,
   UPDATE_NUMBER_COMMENT,
-  UPDOWNVOTE
-} from '../Actions/postAction'
-
+  UP_DOWN_VOTE_POST,
+  SORT_DATE,
+  GET_POST_BY_CATEGORY
+} from '../Constans/ActionTypesComment'
 /**
  * @description Initial state for all of posts
  */
-const initialPosts = { 
-  posts: [],
-  post: {}
+const initialPosts = {
+  posts: {},
+  postDetails: {},
 }
-
 /**
  * @description Reducer for post
  * @param {Object} state - Contains information about the posts
@@ -27,50 +27,84 @@ export function posts (state = initialPosts, action) {
       const { posts } = action        
       return {
         ...state,
-        posts
+        posts: posts
       }
     case DETAIL_POST :
       const { postId } = action
       return {
         ...state,
-        post: postId
+        postDetails: postId
       }
     case REMOVE_POST :
-      const { idPost } = action
+      const { idPost, typeRemove } = action
+      typeRemove === 'postCategory' && delete state.postDetails[idPost]
+      delete state.posts[idPost]
       return {
         ...state,
-        posts: [...state.posts.filter(post => post.id !== idPost)]
+        posts: state.posts
       }
     case ADD_POST :
       const { newPost } = action
       return {
         ...state,
-        posts: [...state.posts, newPost]
+        posts: {...state.posts, [newPost.id]: newPost}
       }
     case EDIT_POST :
-      const { id, title, body } = action
+      const { id, title, body } = action      
+      typeof state.posts[id] === 'object' && (
+        state.posts[id].title = title,
+        state.posts[id].body = body
+      )
+      state.postDetails.title = title
+      state.postDetails.body = body
       return {
         ...state,
-        posts: state.posts.map(post => {
-                post.id === id && ( post.title = title, post.body = body )
-                return post
-                })
+        posts: state.posts,
+        postDetails: state.postDetails
       }
-    case UPDOWNVOTE :
-      const { numberVote, idPostVote } = action
+    case UP_DOWN_VOTE_POST :
+      const { numberVote, idPostVote, typeVote } = action      
+      typeVote !== 'postList'
+      ? (
+          typeVote === 'postDetails'
+          ? state.postDetails.voteScore = numberVote
+          : state.postDetails[idPostVote].voteScore = numberVote,
+          typeof state.posts[idPostVote] === 'object' && (state.posts[idPostVote].voteScore = numberVote)          
+      )
+      : state.posts[idPostVote].voteScore = numberVote
       return {
         ...state,
-        posts: state.posts.map(post => {
-                post.id === idPostVote && ( post.voteScore = numberVote )
-                return post
-               })
-      }
+        postDetails: state.postDetails,
+        posts: state.posts
+      }          
     case UPDATE_NUMBER_COMMENT :
       const { idPostComment, typeUpdate } = action
+      state.postDetails.id === idPostComment &&
+        typeUpdate === 'increase'
+        ? (
+          state.postDetails.commentCount++,
+          typeof state.posts[idPostComment] === 'object' && (state.posts[idPostComment].commentCount++)
+        )
+        : (
+          state.postDetails.commentCount--,
+          typeof state.posts[idPostComment] === 'object' && (state.posts[idPostComment].commentCount--)
+        )      
       return {
         ...state,
-        post: {...state.post, ...state.post.id === idPostComment && (
-          typeUpdate === 'increase' ? state.post.commentCount++ :state.post.commentCount--)}
+        postDetails: state.postDetails,
+        posts: state.posts
+      }
+    case SORT_DATE :
+      const { sortPosts } = action
+      return {
+        ...state,
+        posts: sortPosts
+      }
+    case GET_POST_BY_CATEGORY :
+      const { postsByCategory } = action
+      return {
+        ...state,
+        postDetails: postsByCategory
       }
     default:
       return state

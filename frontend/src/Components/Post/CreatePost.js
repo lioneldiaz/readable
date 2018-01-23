@@ -15,10 +15,11 @@ class CreatePost extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      id: props.edit ? props.posts.post.id :generateKey(),
-      title: props.edit ? props.posts.post.title :props.title,
-      body: props.edit ? props.posts.post.body :props.body,
-      category: 'select'
+      id: props.edit ? props.id :generateKey(),
+      title: props.title,
+      body: props.body,
+      category: 'select',
+      timestamp: Date.now()
     }
   }
   /**
@@ -33,7 +34,8 @@ class CreatePost extends Component {
    */
   handleSubmit = (event) => {
     event.preventDefault()
-    const post = serializeForm(event.target, { hash: true })
+    const post = serializeForm(event.target, { hash: true })    
+    post.timestamp = this.state.timestamp
     !this.props.edit
       ? this.props.addPost(post)
       : this.props.editPost(post)
@@ -56,15 +58,16 @@ class CreatePost extends Component {
    */
   componentWillReceiveProps (nextProps) {
     this.setState({
-      title: nextProps.posts.post.title,
-      body: nextProps.posts.post.body
+      id: nextProps.postDetails.id,
+      title: nextProps.postDetails.title,
+      body: nextProps.postDetails.body
     })     
   }
   /**
    * @description Invoke immediately after the component is inserted in the DOM
    */
   componentDidMount () {
-    this.props.categories.categories.length === 0 && !this.props.edit && this.props.getCategories()
+    this.props.categories.length === 0 && !this.props.edit && this.props.getCategories()
     this.props.edit && this.props.getPostById(this.props.match.params.id)     
   }
   render() {
@@ -75,37 +78,38 @@ class CreatePost extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="create-contact-details">  
           <input hidden={true} type="text" name="id" value={this.state.id} onChange={this.handleChange}/>
-          <input hidden={true} type="text" name="timestamp" value={Date.now()} onChange={this.handleChange}/>
+          <input hidden={true} type="text" name="timestamp" value={this.state.timestamp} onChange={this.handleChange}/>
           <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleChange}/>  
           <textarea name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange}/> 
           <input hidden={edit ? true :false} type="text" name="author" placeholder="Author" value={this.props.author} onChange={this.handleChange}/>
           <select hidden={edit ? true :false} name="category" value={this.state.category} onChange={this.handleChange} >
             <option value="select" disabled>--Select--</option>
-            {categories.categories.map((category, index) => (
+            {categories.map((category, index) => (
               <option key={index} value={this.props.category}>{category.name}</option>
             ))}              
           </select>           
             <button>{edit ? "Edit" :"Save"}</button>
           </div>
-        </form>    
+        </form>   
       </div>     
     )
   }
 }
 /**
  * @description Specify which data from the store you passed to your React component
- * @param {Object} state - The current store state
+ * @param {Object} categories
+ * @param {Object} posts
  * @return {Object}
  */
-function mapStateToProps (state) {
+function mapStateToProps ({categories, posts}) {
   return {
-    categories: state.categories,
-    posts: state.posts
+    categories: Object.keys(categories).map(key => categories[key]),
+    postDetails: posts.postDetails
   }
 }
 /**
  * @description Bind dispatch to your action creators before they ever hit your component
- * @param {function} dispatch - Our specific props
+ * @param {function} dispatch
  * @return {Object}
  */
 function mapDispatchToProps (dispatch) {

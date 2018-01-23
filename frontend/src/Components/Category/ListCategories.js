@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { fetchCategories } from '../../Actions/categoryAction'
 
 class ListCategories extends Component {
@@ -8,13 +9,13 @@ class ListCategories extends Component {
    * @description Validate the props declared
    */
   static propTypes = {
-    categories: PropTypes.object.isRequired
+    categories: PropTypes.array.isRequired
   }
   /**
    * @description Invoke immediately after the component is inserted in the DOM
    */
   componentDidMount () {
-    this.props.categories.categories.length === 0 && this.props.getCategories()
+    this.props.categories.length === 0 && this.props.getCategories()
   }
   render(){
     const {categories}=this.props
@@ -22,9 +23,15 @@ class ListCategories extends Component {
       <div>
         <h2 className="list-category-post">Categories</h2>
         <ul>
-          {categories.categories.map((category, index) => (
+          {categories.map((category, index) => (
             <li key={index}>
+              <Link
+              to={{
+                pathname:`/${category.name}`
+              }}
+              >
               {category.name}
+              </Link>
             </li>
           ))}
         </ul>       
@@ -34,17 +41,17 @@ class ListCategories extends Component {
 }
 /**
  * @description Specify which data from the store you passed to your React component
- * @param {Object} state - The current store state
+ * @param {Object} categories
  * @return {Object}
  */
-function mapStateToProps (state) {
+function mapStateToProps ({categories}) {
   return {
-    categories: state.categories
+    categories: Object.keys(categories).map(key => categories[key])
   }
 }
 /**
  * @description Bind dispatch to your action creators before they ever hit your component
- * @param {function} dispatch - Our specific props
+ * @param {function} dispatch
  * @return {Object}
  */
 function mapDispatchToProps (dispatch) {
