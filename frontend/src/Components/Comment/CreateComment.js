@@ -39,18 +39,33 @@ class CreateComment extends Component {
   }
   render () {
     const {objComment, edit, onCloseForm}=this.props
+    console.log("Comment", objComment)
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input hidden={true} type="text" name="id" value={edit ? objComment.id : generateKey()} onChange={this.handleChange}/>
-          <input hidden={true} type="number" name="timestamp" value={this.state.timestamp} onChange={this.handleChange}/>
-          <textarea name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange} />
-          <input hidden={edit ? true : false} type="text" name="author" placeholder="Author" onChange={this.handleChange} />
-          <input hidden={true} type="text" name="parentId" value={this.props.idPost} onChange={this.handleChange}/>
-          <button>{edit ? 'Edit': 'Save'}</button>         
-        </form>
-        <button onClick={onCloseForm}>Cancel</button>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <div className="form-group">
+          <input className="form-control" hidden={true} type="text" name="id" value={edit ? objComment.id : generateKey()} onChange={this.handleChange}/>
+        </div>
+        <div className="form-group"> 
+          <input className="form-control" hidden={true} type="number" name="timestamp" value={this.state.timestamp} onChange={this.handleChange}/>
+        </div>
+        <div className="form-group">  
+          <input className="form-control" hidden={edit ? true : false} type="text" name="author" placeholder="Author" onChange={this.handleChange} />
+        </div>
+        <div className="form-group">  
+          <textarea className="form-control" rows="4" name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange} />
+        </div>          
+        <div className="form-group">  
+          <input className="form-control" hidden={true} type="text" name="parentId" value={this.props.idPost} onChange={this.handleChange}/>
+        </div>
+        <div className="row">
+          <div className="col">
+            <button className="btn rd-button" style={{float:'left'}}>{edit ? 'Edit': 'Save'}</button>
+          </div>
+          <div className="col">
+            <button className="btn rd-button" style={{float:'right'}} onClick={onCloseForm}>Cancel</button>
+          </div>
+        </div>
+      </form>
     )
   }
 }

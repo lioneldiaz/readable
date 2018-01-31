@@ -6,10 +6,29 @@ import {
   fetchRemovePost, 
   fetchUpDownVotePost,
   goSortDate } from '../../Actions/postAction'
-import { Link } from 'react-router-dom'
+import FaBars from 'react-icons/lib/fa/bars'
+import FaClose from 'react-icons/lib/fa/close'
+import Menu from './Menu'
 import Post from './Post'
 
 class ListPosts extends Component {
+  /**
+   * @description Represent ListPosts
+   */
+  constructor () {
+    super();
+    this.state = {
+      menu: true
+    }
+  }
+  /**
+   * @description Show up menu or hide
+   */
+  onMenu = () => {
+    this.state.menu  
+    ? this.setState(() => ({menu: false}))
+    : this.setState(() => ({menu: true}))
+  }
   /**
    * @description Validate of the data types passed to the component
    */
@@ -25,20 +44,30 @@ class ListPosts extends Component {
   render(){
     const {posts, removePost, votePost, sortPost}=this.props    
     return(
-      <div>
-        <a onClick={() => sortPost(posts,"ASC","timestamp")}>Sort Date ASC</a>
-        <a onClick={() => sortPost(posts,"DESC","timestamp")}>Sort Date DESC</a>
-        <a onClick={() => sortPost(posts,"ASC","voteScore")}>Sort Vote Score ASC</a>
-        <a onClick={() => sortPost(posts,"DESC","voteScore")}>Sort Vote Score DESC</a>
-        <h2 className="list-category-post">Posts</h2>       
-        {posts.map((post, index) => (                
-          <Post key={index} post={post} onVote={votePost} onRemovePost={removePost} typeVote={"postList"}/>     
+      <div className="container">        
+        <div className="rd-separator"/>
+        <div className="row">      
+        {posts.map((post, index) => (
+          <div key={index} className="col-md-6">
+            <Post key={index} post={post} onVote={votePost} onRemovePost={removePost} typeVote={"postList"}/>
+          </div>
         ))}
-        <div>
-          <Link to="/new/post">
-            Add
-          </Link>
-        </div>          
+        </div>
+        <div className="add-post" onClick={this.onMenu}>
+          <div>
+            {this.state.menu
+              ? <FaBars className="icon-menu" size={20}/>
+              : <FaClose className="icon-menu" size={20}/>
+            }           
+          </div>
+        </div>
+        <div hidden={this.state.menu} className="menu-post">
+          <Menu
+            sortPost={sortPost}
+            posts={posts}
+            typeMenu={"postMenu"}
+          />
+        </div>                  
       </div>
     )
   }

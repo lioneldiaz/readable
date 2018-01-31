@@ -4,6 +4,7 @@ import {
   fetchPostByCategory,
   fetchUpDownVotePost,
   fetchRemovePost} from '../../Actions/postAction'
+import { Link } from 'react-router-dom'
 import Post from '../Post/Post'
 
 class CategoryByPosts extends Component {
@@ -22,21 +23,43 @@ class CategoryByPosts extends Component {
   componentDidMount () {
     this.props.getPostsByCategory(this.props.match.params.category)
   }
+ 
   render () {
     const {posts, votePost}=this.props
     return (
-      <div>
-        <h1>{this.props.match.params.category}</h1>
-        {posts.map((post, index) => (
-          <Post 
-            key={index} 
-            post={post} 
-            onVote={votePost} 
-            onRemovePost={this.onRemovePost} 
-            typeVote={"postCategory"}
-            typeRemove={"postCategory"}
-          />
-        ))}
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">           
+            <Link className="close-create-post" to="/"/>
+            <Link to="/">           
+            <div className="post">
+              <p style={{color:'#61DAFB'}}><h1>{this.props.match.params.category}</h1></p>
+              <p className="card-text">
+              React makes it painless to create interactive UIs. 
+              Design simple views for each state in your application, 
+              and React will efficiently update and render just the right 
+              components when your data changes.
+              Declarative views make your code more predictable and easier to debug.
+              </p>          
+            </div>
+            </Link>
+          </div>        
+        </div>
+        <div className="rd-separator"/>     
+        <div className="row">          
+          {posts.map((post, index) => (
+            <div key={index} className="col-md-12">
+              <Post 
+                key={index} 
+                post={post} 
+                onVote={votePost} 
+                onRemovePost={this.onRemovePost} 
+                typeVote={"postCategory"}
+                typeRemove={"postCategory"}
+              />
+            </div>
+          ))}
+        </div>        
       </div>
     )
   }

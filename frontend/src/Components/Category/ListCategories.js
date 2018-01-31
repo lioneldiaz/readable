@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { fetchCategories } from '../../Actions/categoryAction'
 
+
 class ListCategories extends Component {
   /**
    * @description Validate the props declared
@@ -20,21 +21,33 @@ class ListCategories extends Component {
   render(){
     const {categories}=this.props
     return(
-      <div>
-        <h2 className="list-category-post">Categories</h2>
-        <ul>
-          {categories.map((category, index) => (
-            <li key={index}>
-              <Link
-              to={{
-                pathname:`/${category.name}`
-              }}
-              >
-              {category.name}
-              </Link>
-            </li>
-          ))}
-        </ul>       
+      <div className="row">       
+        {categories.map((category, index) => (          
+          <div key={index} className="col-md-4">
+            <div className="card text-center category-margin rd-box-category">
+              <div className="top-card-category" style={{backgroundColor:category.name==='react'?'#61DAFB':category.name==='redux'?'#7747BC':'#02B3E4'}}/>
+              <div className="card-body">
+                <h5 className="card-title">{category.name}</h5>
+                <p className="card-text">
+                React makes it painless to create interactive UIs. 
+                Design simple views for each state in your application, 
+                and React will efficiently update and render just the right 
+                components when your data changes.
+                Declarative views make your code more predictable and easier to debug.
+                </p>
+                <a className="btn-readable" style={{backgroundColor:category.name==='react'?'#61DAFB':category.name==='redux'?'#7747BC':'#02B3E4'}}>
+                  <Link style={{color: 'white'}}
+                  to={{
+                    pathname:`/${category.name}`
+                  }}
+                  >
+                View Posts
+                </Link>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}                    
       </div>
     )
   }

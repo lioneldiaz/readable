@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import ReactModal from 'react-modal'
+import Menu from '../Post/Menu'
+import FaBars from 'react-icons/lib/fa/bars'
+import FaClose from 'react-icons/lib/fa/close'
 import { 
   fetchPostById,
   fetchRemovePost,
@@ -26,7 +30,8 @@ class DetailsPost extends Component {
     this.state = {
       newComment: false,
       editComment: false,
-      idComment: null
+      idComment: null,
+      menu: true
     }
   }
   /**
@@ -69,6 +74,14 @@ class DetailsPost extends Component {
     this.props.removePost(post)
     this.props.history.push('/')
   }
+   /**
+   * @description Show up menu or hide
+   */
+  onMenu = () => {
+    this.state.menu  
+    ? this.setState(() => ({menu: false}))
+    : this.setState(() => ({menu: true}))
+  }
   /**
    * @description Invoke immidiately after the component is inserted in the DOM
    */
@@ -81,7 +94,7 @@ class DetailsPost extends Component {
     const {post, comments, onEditComment, votePost, voteComment}=this.props    
     const {newComment, editComment, idComment}=this.state    
     return (
-      <div>
+      <div className="container">
         <Link className="close-create-post" 
         to={{
           pathname: "/"
@@ -94,28 +107,48 @@ class DetailsPost extends Component {
             onRemovePost={this.onRemovePost}
             typeVote={"postDetails"}
           />
-        }        
-        <div>
+        }
+        <div className="row">
+          <div className="col-md-12">
+            <ul className="rd-comment-list">
+              {comments.map((comment, index) => (
+                <Comment 
+                  key={index}
+                  comment={comment}                  
+                  onRemoveComment={this.onRemoveComment}
+                  voteComment={voteComment}
+                  openEditComment={this.openEditComment}
+                  editComment={editComment}                  
+                  idComment={idComment}
+                  onEditComment={onEditComment}
+                  onCloseForm={this.closeComment}
+                />    
+              ))} 
+            </ul>
+          </div>             
+        </div>
+        <div className="add-post" onClick={this.onMenu}>
           <div>
-            <ul>
-              {comments.map((comment, index) => (                                                     
-                  <Comment 
-                    key={index}
-                    comment={comment}
-                    onRemoveComment={this.onRemoveComment}
-                    voteComment={voteComment}
-                    openEditComment={this.openEditComment}
-                    editComment={editComment}
-                    idComment={idComment}
-                    onEditComment={onEditComment}
-                    onCloseForm={this.closeComment}
-                  />    
-                ))
-              } 
-            </ul>             
-          </div>         
+            {this.state.menu
+              ? <FaBars className="icon-menu" size={20}/>
+              : <FaClose className="icon-menu" size={20}/>
+            }           
+          </div>
+        </div>
+        <div hidden={this.state.menu} className="menu-post" onClick={this.onMenu}>
+          <Menu
+            openAddComment={this.openAddComment}
+          />
+        </div>                 
           <div>
-            <a className="button-post-delete list-element-post post-pointer" onClick={this.openAddComment}>New comment</a>
+            <ReactModal
+              isOpen={newComment}
+              onRequestClose={this.closeComment}
+              style={{ 
+                overlay: {},
+                content: {left: 350, right: 350, top: 150, bottom: 150} 
+              }}
+            >
             {newComment && (
               <CreateComment 
                 onCloseForm={this.closeComment}
@@ -123,9 +156,9 @@ class DetailsPost extends Component {
                 idPost={this.props.match.params.post_id}
                 edit={false}
               />
-            )}       
-          </div>
-        </div>  
+            )}   
+            </ReactModal>            
+          </div>      
       </div>
     )
   }

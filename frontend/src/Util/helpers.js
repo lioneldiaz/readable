@@ -52,3 +52,38 @@ export function sortByDates (arrayPosts, typeOrder, propertySort) {
   }  
   return objPosts
 }
+/**
+ * @description Cut a string if this contain more than 65 characters
+ * @param {string} body A body string of the post
+ * @param {string} typeBrief
+ * @return {string}
+ */
+export function briefBody (body, typeBrief) {
+  let newBody = ''
+  if (typeBrief === 'postList') {
+    let position
+    if (body.length > 63) {
+      for (let i = 0; i < body.length; i++) {
+        if (i <= 63)
+          newBody += body[i]
+        if (i === 63)
+          break
+      }
+      if (newBody[63] !== ' ' && newBody[63] !== '.' && newBody[63] !== ',') {
+        for (let i = newBody.length; i > 0; i--) {
+          if (newBody[i] === ' ' || newBody[i] === '.' || newBody[i] === ',') {
+            position = i
+            break
+          }
+        }
+      }
+      if (position !== 0)
+        newBody = newBody.slice(0, position) + '..'
+    }
+    else
+      newBody = body + '..'
+  }
+  else
+    newBody = body
+  return newBody
+}

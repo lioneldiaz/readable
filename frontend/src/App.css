@@ -7,8 +7,9 @@
   margin-left: 20px;
   margin-right: 20px;
   padding-left: 5px;
-  border-left: 6px solid rgb(0, 174, 255);
-  background: #f7f5f5;
+  border-left: 6px solid #61DAFB;
+  background: white;
+  margin-top: 10px;
 }
 .list-separator-post {
   padding: 10px;
@@ -48,7 +49,7 @@
 }
 .thumb-negative {
   color: white;
-  background-color: red;
+  background: red;
   border-radius: 180px;
 }
 
@@ -68,9 +69,9 @@
 }
 
 /* edit comment and post */
-.edit-hover :hover {
+/* .edit-hover :hover {
   color: rgb(6, 127, 240);
-}
+} */
 
 /* comment */
 .user-comment {
@@ -86,3 +87,95 @@
 .p-comment {
   padding-left: 10px;
 }
+/* List categories */
+.category-margin {
+  margin-top: 10px;
+}
+.top-card-category {
+  height: 5px;
+}
+.btn-readable {
+  
+  border-radius: 60px;
+  padding: 5px 30px;
+}
+/* End List categories */
+/* List posts */
+.post-margin {
+  margin-bottom: 10px;
+}
+
+.add-post {  
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+}
+.add-post div {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #02B3E4;  
+}
+a:link {
+  text-decoration: none;
+}
+.menu-post {
+  position: fixed;
+  right: 25px;
+  bottom: 80px;
+  display: block;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #DFDFDF;
+  padding: 5px;
+}
+ul.list-menu {
+  list-style-type: none;
+  padding-left: 5px;
+  padding-right: 5px;  
+}
+ul.list-menu :hover {
+  background-color: #02B3E4;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+.icon-menu {
+  position: 'absolute';
+  margin-top: 15px;
+  margin-left: 15px;
+  color: white;
+}
+.text-menu {
+  margin-left: 5px;  
+}
+/* End List posts */
+/* Nav */
+.nav-color {
+  background-color: #02B3E4
+}
+/* End Nav */
+.rd-button {
+  background: #02B3E4;
+  text-align: center;
+  color: white;
+  padding: 5px 40px;
+  border-radius: 60px;
+}
+.rd-modal {
+  width: 500px;
+  left: 200%;
+  
+}
+/**
+* This code was taken on this web site
+* https://www.w3schools.com/css/css3_shadows.asp
+*/
+.rd-box-category {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);;
+}
+
+
+
+

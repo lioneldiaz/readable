@@ -1,22 +1,45 @@
-# Readable API Server
-
+# Readable
 This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
 This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
 
-## Start Developing
+## Getting Started
 
-To get started developing right away:
+### Prerequisites
+You should install Node JS and any browser.
+
+### Installing
+Clone the repository
+```
+git clone https://github.com/lioneldiaz/readable.git
+```
 
 * Install and start the API server
-    - `cd api-server`
-    - `npm install`
-    - `node server`
-* In another terminal window, use Create React App to scaffold out the front-end
-    - `create-react-app frontend`
-    - `cd frontend`
-    - `npm start`
+```
+    - cd api-server
+    - npm install
+    - node server
+```
+* Install and start the front-end
+```
+    - cd frontend
+    - npm install
+    - npm start
+```
+## Built With
 
-## API Server
+* [React JS](https://reactjs.org/) - A JavaScript library for building user interfaces.
 
-Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+## Contributing
+
+Please read [contributors](https://github.com/lioneldiaz/readable/graphs/contributors)
+
+## Authors
+
+**Lionel Diaz**
+
+See also the list of [contributors](https://github.com/lioneldiaz/readable/graphs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

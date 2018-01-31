@@ -15,10 +15,11 @@ class CreatePost extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      id: props.edit ? props.id :generateKey(),
-      title: props.title,
-      body: props.body,
-      category: 'select',
+      id: generateKey(),
+      title: '',
+      body: '',
+      author: '',
+      category: 'Choose',
       timestamp: Date.now()
     }
   }
@@ -36,6 +37,7 @@ class CreatePost extends Component {
     event.preventDefault()
     const post = serializeForm(event.target, { hash: true })    
     post.timestamp = this.state.timestamp
+    console.log("Object post", post)
     !this.props.edit
       ? this.props.addPost(post)
       : this.props.editPost(post)
@@ -60,7 +62,8 @@ class CreatePost extends Component {
     this.setState({
       id: nextProps.postDetails.id,
       title: nextProps.postDetails.title,
-      body: nextProps.postDetails.body
+      body: nextProps.postDetails.body,
+      category: nextProps.postDetails.category
     })     
   }
   /**
@@ -73,24 +76,39 @@ class CreatePost extends Component {
   render() {
     const {categories, edit}=this.props    
     return (  
-      <div>
-        <Link className="close-create-post" to="/">Close</Link>
-        <form onSubmit={this.handleSubmit}>
-          <div className="create-contact-details">  
-          <input hidden={true} type="text" name="id" value={this.state.id} onChange={this.handleChange}/>
-          <input hidden={true} type="text" name="timestamp" value={this.state.timestamp} onChange={this.handleChange}/>
-          <input type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleChange}/>  
-          <textarea name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange}/> 
-          <input hidden={edit ? true :false} type="text" name="author" placeholder="Author" value={this.props.author} onChange={this.handleChange}/>
-          <select hidden={edit ? true :false} name="category" value={this.state.category} onChange={this.handleChange} >
-            <option value="select" disabled>--Select--</option>
-            {categories.map((category, index) => (
-              <option key={index} value={this.props.category}>{category.name}</option>
-            ))}              
-          </select>           
-            <button>{edit ? "Edit" :"Save"}</button>
+      <div >
+        <Link className="close-create-post" to="/">Close</Link>        
+        <div className="row">
+          <div className="col-md-6 col-md-offset-3">
+            <form className="text-center" onSubmit={this.handleSubmit}>
+              <div className="form-group">
+                <input className="form-control" hidden={true} type="text" name="id" value={this.state.id} onChange={this.handleChange}/>
+              </div>
+              <div className="form-group">  
+                <input className="form-control" hidden={true} type="text" name="timestamp" value={this.state.timestamp} onChange={this.handleChange}/>
+              </div>
+              <div className="form-group">
+                <input className="form-control" type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleChange}/>  
+              </div>
+              <div className="form-group">
+                <textarea className="form-control" name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange}/> 
+              </div>
+              <div className="form-group">
+                <input className="form-control" hidden={edit ? true :false} type="text" name="author" placeholder="Author" value={this.state.author} onChange={this.handleChange}/>
+              </div>
+              <div className="form-group">
+                <select className="form-control" hidden={edit ? true :false} name="category" value={this.state.category} onChange={this.handleChange} >
+                  <option value="Choose" disabled>{this.state.category}</option>
+                  {categories.map((category, index) => (
+                    <option key={index} value={this.props.category}>{category.name}</option>
+                  ))}              
+                </select>
+              </div>         
+              <button className="btn rd-button">{edit ? "Edit" :"Save"}</button>         
+            </form>
+          
           </div>
-        </form>   
+        </div>  
       </div>     
     )
   }
