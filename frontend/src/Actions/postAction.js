@@ -9,7 +9,7 @@ import {
   DETAIL_POST,
   UP_DOWN_VOTE_POST,
   UPDATE_NUMBER_COMMENT,
-  SORT_DATE
+  SORT
 } from '../Constans/ActionTypesComment'
 /**
  * @description Action creators
@@ -115,7 +115,7 @@ export function updateNumberComment (idPostComment, typeUpdate) {
 
 export function sortDate (sortPosts) {
   return {
-    type: SORT_DATE,
+    type: SORT,
     sortPosts
   }
 }

@@ -17,7 +17,7 @@ export const REMOVE_POST = 'REMOVE_POST'
 export const DETAIL_POST = 'DETAIL_POST'
 export const UPDATE_NUMBER_COMMENT = 'UPDATE_NUMBER_COMMENT'
 export const UP_DOWN_VOTE_POST = 'UP_DOWN_VOTE_POST'
-export const SORT_DATE = 'SORT_DATE'
+export const SORT = 'SORT_DATE'
 /**
  * @description Action types Category
  */

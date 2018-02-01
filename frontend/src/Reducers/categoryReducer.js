@@ -10,13 +10,12 @@ const initailCategories = {}
  */
 export function categories(state = initailCategories, action){
   switch (action.type) {
-    case GET_CATEGORIES:
-      const { categories } = action      
+    case GET_CATEGORIES :
+      const { categories } = action    
       return {
         ...state,
         ...categories
       }  
-    default:
-      return state
+    default: return state
   }
 }

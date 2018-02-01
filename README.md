@@ -1,5 +1,5 @@
 # Readable
-This is the starter project for the final assessment project for Udacity's Redux course where you will build a content and comment web app. Users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
+Today, many people use blogs and forums on the internet to find information and learn something. In this app users will be able to post content to predefined categories, comment on their posts and other users' posts, and vote on posts and comments. Users will also be able to edit and delete posts and comments.
 
 This repository includes the code for the backend API Server that you'll use to develop and interact with the front-end portion of the project.
 
@@ -25,6 +25,12 @@ git clone https://github.com/lioneldiaz/readable.git
     - cd frontend
     - npm install
     - npm start
+```
+## Running the tests
+Start test
+```
+    - cd frontend
+    - npm test
 ```
 ## Built With
 

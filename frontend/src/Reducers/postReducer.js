@@ -6,7 +6,7 @@ import {
   EDIT_POST,
   UPDATE_NUMBER_COMMENT,
   UP_DOWN_VOTE_POST,
-  SORT_DATE,
+  SORT,
   GET_POST_BY_CATEGORY
 } from '../Constans/ActionTypesComment'
 /**
@@ -107,7 +107,7 @@ function updateNumberCommentPost (state, action) {
   }
   return updateObject(state, updateNumber)
 }
-function sortDatePost (state, action) {
+function sortPost (state, action) {
   const { sortPosts } = action
   const sortP = {
     ...state,
@@ -137,7 +137,7 @@ export function posts (state = initialPosts, action) {
     case EDIT_POST : return editPost (state, action)      
     case UP_DOWN_VOTE_POST : return upDownVotePost (state, action)            
     case UPDATE_NUMBER_COMMENT : return updateNumberCommentPost (state, action)      
-    case SORT_DATE : return sortDatePost (state, action)      
+    case SORT : return sortPost (state, action)      
     case GET_POST_BY_CATEGORY : return getPostByCategory (state, action)      
     default : return state
   }
