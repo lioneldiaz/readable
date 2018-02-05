@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import ListCategories from './Category/ListCategories'
 import ListPosts from './Post/ListPosts'
 import CategoryByPosts from './Category/CategoryByPosts'
@@ -13,6 +13,7 @@ class App extends Component {
   render(){
     return(
       <div className="container">
+      <Switch>
         <Route exact path="/" render={(match) => (
           [ 
             <ListCategories key={generateKey()} />,
@@ -38,6 +39,13 @@ class App extends Component {
             {...match}
           />
         )}/>
+        <Route render={(match) => (
+          [ 
+            <ListCategories key={generateKey()} />,
+            <ListPosts key={generateKey()} {...match}/>
+          ]
+        )}/>
+      </Switch>
       </div>
     )
   }

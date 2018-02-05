@@ -57,7 +57,7 @@ export function comments (state = initialComments, action) {
     case ADD_COMMENT : return addComment (state, action)
     case EDIT_COMMENT : return editComment (state, action)
     case UPDOWNVOTE : return upDownVote (state, action)
-    case REMOVE_COMMENT : return removeComment (state, action)  
+    case REMOVE_COMMENT : return removeComment (state, action)
     default : return state
   }
 }

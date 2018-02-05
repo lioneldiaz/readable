@@ -15,7 +15,7 @@ import {
   fetchComments,
   fetchAddComment,
   fetchRemoveComment,
-  fetchUpDownVoteComment } from '../../Actions/commentAction'
+  fetchUpDownVoteComment} from '../../Actions/commentAction'
 import CreateComment from '../../Components/Comment/CreateComment'
 import Post from './Post'
 import Comment from '../Comment/Comment'
@@ -81,10 +81,13 @@ class DetailsPost extends Component {
     this.setState(() => ({ editComment: true, idComment }))
   }
   /**
-   * @description Remove the post
+   * @description Remove the post and all comments
    * @param {Object} post
    */
-  onRemovePost = (post) => {
+  onRemovePost = (post) => {   
+    this.props.comments.forEach(comment => {
+      this.props.removeComment(comment)
+    })
     this.props.removePost(post)
     this.props.history.push('/')
   }
@@ -101,12 +104,12 @@ class DetailsPost extends Component {
    */
   componentDidMount () {
     const id = this.props.match.params.post_id    
-    this.props.getPostById(id)
+    this.props.getPostById(id)    
     this.props.getComments(id)
   }
   render () {    
     const {post, comments, votePost, voteComment}=this.props    
-    const {newComment, editComment, idComment}=this.state    
+    const {newComment, editComment, idComment}=this.state
     return (
       <div className="container">
         <Link className="rd-close-create-post" 

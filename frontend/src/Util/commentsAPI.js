@@ -53,4 +53,3 @@ export const remove = (comment) =>
   })
   .then(result => result.json())
   .then(data => data)
-

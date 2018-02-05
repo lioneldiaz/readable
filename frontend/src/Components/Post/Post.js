@@ -20,7 +20,7 @@ const Post = ({post, onVote, onRemovePost, typeVote, typeRemove}) => {
           {briefBody(`${post.body}`, typeVote)}
           {typeVote !== 'postDetails' &&
             <Link 
-              style={{color: 'black'}}
+              style={{color: '#02B3E4'}}
               to={{
                 pathname: `/${post.category}/${post.id}`
               }}>
