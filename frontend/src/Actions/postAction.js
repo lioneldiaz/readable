@@ -1,5 +1,5 @@
 import * as postsAPI from '../Util/postsAPI'
-import { sortByDates } from '../Util/helpers'
+import { sortBy } from '../Util/helpers'
 import {
   GET_POSTS,
   GET_POST_BY_CATEGORY,
@@ -94,7 +94,8 @@ export function editPost (editPost) {
     type: EDIT_POST,
     id: editPost.id,
     title: editPost.title,
-    body: editPost.body
+    body: editPost.body,
+    timestamp: editPost.timestamp
   }
 }
 export function fetchEditPost (post) {
@@ -121,7 +122,7 @@ export function sortDate (sortPosts) {
 }
 export function goSortDate (posts, typeSort, propertySort) {
   return dispatch => {    
-    dispatch(sortDate(sortByDates(posts, typeSort, propertySort)))
+    dispatch(sortDate(sortBy(posts, typeSort, propertySort)))
   }
 }
 

@@ -33,7 +33,12 @@ class ListPosts extends Component {
    * @description Validate of the data types passed to the component
    */
   static propTypes = {
-    posts: PropTypes.array.isRequired
+    posts: PropTypes.array.isRequired,
+    getPosts: PropTypes.func.isRequired,
+    removePost: PropTypes.func.isRequired,
+    votePost: PropTypes.func.isRequired,
+    sortPost: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired
   }
   /**
    * @description Invoke immediately after the component is inserted in the DOM

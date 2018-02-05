@@ -1,13 +1,26 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import { 
   fetchPostByCategory,
   fetchUpDownVotePost,
   fetchRemovePost} from '../../Actions/postAction'
 import { Link } from 'react-router-dom'
 import Post from '../Post/Post'
+import * as typesCategory from '../../Constans/TextCategories'
+import './Category.css'
 
 class CategoryByPosts extends Component {
+  /**
+   * @description Validate the props declared
+   */
+  static propTypes = {
+    posts: PropTypes.array.isRequired,
+    getPostsByCategory: PropTypes.func.isRequired,
+    votePost: PropTypes.func.isRequired,
+    removePost: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired
+  }
   /**
    * @description Remove the post
    * @param {Object} post - Post that will be remove
@@ -22,27 +35,26 @@ class CategoryByPosts extends Component {
    */
   componentDidMount () {
     this.props.getPostsByCategory(this.props.match.params.category)
-  }
- 
-  render () {
+  } 
+  render () {    
     const {posts, votePost}=this.props
+    const {category}=this.props.match.params
+    const styleBackground = {background: category==='react'?'#61DAFB':category==='redux'?'#7747BC':'#02B3E4'}
+    const styleColor = {color: category==='react'?'#61DAFB':category==='redux'?'#7747BC':'#02B3E4'}
     return (
-      <div className="container">
+      <div>
         <div className="row">
           <div className="col-md-12">           
-            <Link className="close-create-post" to="/"/>
-            <Link to="/">           
-            <div className="post">
-              <p style={{color:'#61DAFB'}}><h1>{this.props.match.params.category}</h1></p>
+            <Link className="rd-close-create-post" to="/"/>                              
+            <div className="rd-category-by-post" style={styleBackground}/>
+            <div className="rd-category-by-post-body">
+              <h1 style={styleColor}>{category}</h1>
               <p className="card-text">
-              React makes it painless to create interactive UIs. 
-              Design simple views for each state in your application, 
-              and React will efficiently update and render just the right 
-              components when your data changes.
-              Declarative views make your code more predictable and easier to debug.
+                {category === 'react' && typesCategory.reactCategory}
+                {category === 'udacity' && typesCategory.udacityCategory}
+                {category === 'redux' && typesCategory.reduxCategory}
               </p>          
-            </div>
-            </Link>
+            </div>            
           </div>        
         </div>
         <div className="rd-separator"/>     

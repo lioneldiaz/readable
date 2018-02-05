@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import ListCategories from './Category/ListCategories'
 import ListPosts from './Post/ListPosts'
 import CategoryByPosts from './Category/CategoryByPosts'

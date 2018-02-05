@@ -47,13 +47,15 @@ function addPost (state, action) {
   return updateObject(state, addP)
 }
 function editPost (state, action) {
-  const { id, title, body } = action      
+  const { id, title, body, timestamp } = action      
   typeof state.posts[id] === 'object' && (
     state.posts[id].title = title,
-    state.posts[id].body = body
+    state.posts[id].body = body,
+    state.posts[id].timestamp = timestamp
   )
   state.postDetails.title = title
   state.postDetails.body = body
+  state.postDetails.timestamp = timestamp
   const editP = {
     ...state,
     posts: state.posts,
@@ -134,7 +136,7 @@ export function posts (state = initialPosts, action) {
     case DETAIL_POST : return detailsPost (state, action)      
     case REMOVE_POST : return removePost (state, action)
     case ADD_POST : return addPost (state, action)      
-    case EDIT_POST : return editPost (state, action)      
+    case EDIT_POST : return editPost (state, action)
     case UP_DOWN_VOTE_POST : return upDownVotePost (state, action)            
     case UPDATE_NUMBER_COMMENT : return updateNumberCommentPost (state, action)      
     case SORT : return sortPost (state, action)      

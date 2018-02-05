@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import ReactModal from 'react-modal'
+import Modal from 'react-modal'
 import Menu from '../Post/Menu'
 import FaBars from 'react-icons/lib/fa/bars'
 import FaClose from 'react-icons/lib/fa/close'
@@ -15,7 +15,6 @@ import {
   fetchComments,
   fetchAddComment,
   fetchRemoveComment,
-  fetchEditComment,
   fetchUpDownVoteComment } from '../../Actions/commentAction'
 import CreateComment from '../../Components/Comment/CreateComment'
 import Post from './Post'
@@ -33,6 +32,21 @@ class DetailsPost extends Component {
       idComment: null,
       menu: true
     }
+  }
+  /**
+   * @description Validate the props declared
+   */
+  static propTypes = {
+    post: PropTypes.object.isRequired,
+    comments: PropTypes.array.isRequired,
+    getPostById: PropTypes.func.isRequired,
+    getComments: PropTypes.func.isRequired,
+    removeComment: PropTypes.func.isRequired,
+    addComment: PropTypes.func.isRequired,
+    voteComment: PropTypes.func.isRequired,
+    votePost: PropTypes.func.isRequired,
+    updateNumberComment: PropTypes.func.isRequired,
+    match: PropTypes.object.isRequired
   }
   /**
    * @description Allow show the form comment and close it
@@ -91,11 +105,11 @@ class DetailsPost extends Component {
     this.props.getComments(id)
   }
   render () {    
-    const {post, comments, onEditComment, votePost, voteComment}=this.props    
+    const {post, comments, votePost, voteComment}=this.props    
     const {newComment, editComment, idComment}=this.state    
     return (
       <div className="container">
-        <Link className="close-create-post" 
+        <Link className="rd-close-create-post" 
         to={{
           pathname: "/"
         }}
@@ -120,7 +134,6 @@ class DetailsPost extends Component {
                   openEditComment={this.openEditComment}
                   editComment={editComment}                  
                   idComment={idComment}
-                  onEditComment={onEditComment}
                   onCloseForm={this.closeComment}
                 />    
               ))} 
@@ -141,13 +154,11 @@ class DetailsPost extends Component {
           />
         </div>                 
           <div>
-            <ReactModal
+            <Modal
               isOpen={newComment}
               onRequestClose={this.closeComment}
-              style={{ 
-                overlay: {},
-                content: {left: 350, right: 350, top: 150, bottom: 150} 
-              }}
+              style={customStyles}
+              ariaHideApp={false}
             >
             {newComment && (
               <CreateComment 
@@ -157,7 +168,7 @@ class DetailsPost extends Component {
                 edit={false}
               />
             )}   
-            </ReactModal>            
+            </Modal>            
           </div>      
       </div>
     )
@@ -183,14 +194,24 @@ function mapStateToProps ({comments, posts}) {
 function mapDispatchToProps (dispatch) {
   return {
     getPostById: (idPost) => dispatch(fetchPostById(idPost)),
-    removePost: (data) => dispatch(fetchRemovePost(data)),
+    removePost: (post) => dispatch(fetchRemovePost(post)),
     getComments: (idPost) => dispatch(fetchComments(idPost)),
     addComment: (data) => dispatch(fetchAddComment(data)),
-    removeComment: (data) => dispatch(fetchRemoveComment(data)),
+    removeComment: (comment) => dispatch(fetchRemoveComment(comment)),
     updateNumberComment: (idPost, typeUpdate) => dispatch(updateNumberComment(idPost, typeUpdate)),
-    onEditComment: (comment) => dispatch(fetchEditComment(comment)),
     votePost: (idPost, option, typeVote) => dispatch(fetchUpDownVotePost(idPost, option, typeVote)),
     voteComment: (idComment, option) => dispatch(fetchUpDownVoteComment(idComment, option))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DetailsPost)
+
+const customStyles = {
+  content : {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}

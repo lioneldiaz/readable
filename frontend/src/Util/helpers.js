@@ -15,42 +15,46 @@ export function convertDate (timestamp) {
   return date.toDateString()
 }
 /**
+ * @description Removes whitespace from both ends of a string
+ * @param {string} string
+ * @return {string}
+ */
+export function removeSpace (string) {
+  return string.trim()
+}
+/**
  * @description Sort posts array by date
  * @param {array} arrayPosts - Posts array
  * @param {string} typeOrder - Type order can be "ASC" or "DESC"
  * @param {string} propertySort - Property that is going to sort
  * @return {Object}
  */
-export function sortByDates (arrayPosts, typeOrder, propertySort) {
+export function sortBy (arrayPosts, typeOrder, propertySort) {
   let tempPost
-  let index
-  let refPost
   let objPosts = {}
   for (let i = 0; i < arrayPosts.length; i++) {
     tempPost = arrayPosts[i]    
     for (let y = i; y < arrayPosts.length; y++) {
-      typeOrder === 'ASC'
-      ?
+      if (typeOrder === 'ASC') {
         tempPost[propertySort] > arrayPosts[y][propertySort] &&
         (
           tempPost = arrayPosts[y],
-          index = y,
-          refPost = arrayPosts[i],
-          arrayPosts[i] = tempPost,
-          arrayPosts[index] = refPost
+          arrayPosts[y] = arrayPosts[i],
+          arrayPosts[i] = tempPost
         )
-      : tempPost[propertySort] < arrayPosts[y][propertySort] &&
+      }
+      else {
+        tempPost[propertySort] < arrayPosts[y][propertySort] &&
         (
           tempPost = arrayPosts[y],
-          index = y,
-          refPost = arrayPosts[i],
-          arrayPosts[i] = tempPost,
-          arrayPosts[index] = refPost
+          arrayPosts[y] = arrayPosts[i],
+          arrayPosts[i] = tempPost
         )
-    }
+      }
     objPosts[arrayPosts[i].id] = tempPost
-  }  
-  return objPosts
+    }  
+    return objPosts
+  }
 }
 /**
  * @description Cut a string if this contain more than 65 characters
@@ -60,16 +64,16 @@ export function sortByDates (arrayPosts, typeOrder, propertySort) {
  */
 export function briefBody (body, typeBrief) {
   let newBody = ''
-  if (typeBrief === 'postList') {
+  if (typeBrief === 'postList' || typeBrief === 'postCategory') {
     let position
-    if (body.length > 63) {
+    if (body.length > 56) {
       for (let i = 0; i < body.length; i++) {
-        if (i <= 63)
+        if (i <= 56)
           newBody += body[i]
-        if (i === 63)
+        if (i === 56)
           break
       }
-      if (newBody[63] !== ' ' && newBody[63] !== '.' && newBody[63] !== ',') {
+      if (newBody[56] !== ' ' && newBody[56] !== '.' && newBody[56] !== ',') {
         for (let i = newBody.length; i > 0; i--) {
           if (newBody[i] === ' ' || newBody[i] === '.' || newBody[i] === ',') {
             position = i
@@ -78,12 +82,22 @@ export function briefBody (body, typeBrief) {
         }
       }
       if (position !== 0)
-        newBody = newBody.slice(0, position) + '..'
+        newBody = newBody.slice(0, position) + ' '
     }
     else
-      newBody = body + '..'
+      newBody = body + ' '
   }
   else
     newBody = body
   return newBody
+}
+
+/**
+ * @description Validate that the field is only letter and space
+ * @param {string} field
+ * @return {bool}
+ */
+export function validateLetter (field) {
+  const expressionJustLetter = /^[A-Za-z ]+$/
+  return expressionJustLetter.test(removeSpace(field))
 }

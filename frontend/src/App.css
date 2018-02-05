@@ -1,17 +1,18 @@
-/* main page */
-
+.rd-close-create-post {
+  display: block;
+  width: 60px;
+  height: 60px;
+  background-image: url('./Icons/arrow-back.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  font-size: 0px;
+}
 .list-category-post {
   border-bottom: 1px solid #dedede;
 }
-.post {
-  margin-left: 20px;
-  margin-right: 20px;
-  padding-left: 5px;
-  border-left: 6px solid #61DAFB;
-  background: white;
-  margin-top: 10px;
-}
-.list-separator-post {
+
+.rd-list-separator-post {
   padding: 10px;
   border-top: 1px solid #dedede;
   
@@ -26,24 +27,27 @@
   border-radius: 5px;
   background: #f7f5f5;
 }
-.list-element-post {
+.rd-list-element-post {
   float: right;
   padding-right: 10px;
   padding-left: 10px;
   margin-left: 10px;
 }
-.post-pointer {
+.rd-post-pointer {
   cursor: pointer; 
 }
-
-/* upvote and downvote */
 .thumb-vote {
   background-color:rgb(0, 174, 255);
   color: white;
   border-radius: 180px;
 }
-.thumb:hover {
+.rd-thumb-up:hover{
   background-color:rgb(0, 174, 255);
+  color: white;
+  border-radius: 180px;
+}
+.rd-thumb-down:hover{
+  background-color: red;
   color: white;
   border-radius: 180px;
 }
@@ -52,8 +56,6 @@
   background: red;
   border-radius: 180px;
 }
-
-/* comment number and vote */
 .comment-number {
   color: #b9b9b9;
   padding-right: 5px;
@@ -61,19 +63,15 @@
 .vote-number {
   padding-right: 5px;
 }
-.trash {
+.rd-trash, .rd-edit, .rd-thumb-up, .rd-thumb-down {
   color: #b9b9b9;
 }
-.trash-hover :hover {
+.rd-edit:hover {
+  color: #02B3E4;
+}
+.rd-trash:hover {
   color: rgb(240, 46, 46);
 }
-
-/* edit comment and post */
-/* .edit-hover :hover {
-  color: rgb(6, 127, 240);
-} */
-
-/* comment */
 .user-comment {
   background-image: url('./Icons/person.svg');
   background-color: #02e9fa;
@@ -83,28 +81,19 @@
   border-radius: 50%;
   float: left;
 }
-
-.p-comment {
-  padding-left: 10px;
-}
-/* List categories */
 .category-margin {
   margin-top: 10px;
 }
-.top-card-category {
+.rd-top-card-category, .rd-category-by-post {
   height: 5px;
 }
 .btn-readable {
-  
   border-radius: 60px;
   padding: 5px 30px;
 }
-/* End List categories */
-/* List posts */
 .post-margin {
   margin-bottom: 10px;
 }
-
 .add-post {  
   position: fixed;
   right: 25px;
@@ -147,26 +136,15 @@ ul.list-menu :hover {
   margin-left: 15px;
   color: white;
 }
-.text-menu {
+.rd-text-menu {
   margin-left: 5px;  
 }
-/* End List posts */
-/* Nav */
-.nav-color {
-  background-color: #02B3E4
-}
-/* End Nav */
 .rd-button {
   background: #02B3E4;
   text-align: center;
   color: white;
   padding: 5px 40px;
   border-radius: 60px;
-}
-.rd-modal {
-  width: 500px;
-  left: 200%;
-  
 }
 /**
 * This code was taken on this web site

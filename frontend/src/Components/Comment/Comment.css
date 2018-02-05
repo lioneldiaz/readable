@@ -5,7 +5,7 @@
 }
 .rd-comment-vote {
   position: absolute;
-  bottom: 25px;
+  bottom: 50px;
   border: 0.5px solid #DEDEDE;
   padding: 5px;
 }
@@ -23,18 +23,4 @@
 }
 .rd-comment-icon-author {
   margin-top: 12px;
-}
-/**
-* This code was taken on this web site
-* https://www.w3schools.com/howto/howto_css_zoom_hover.asp
-*/
-.rd-comment-zoom {
-  transition: transform .2s;
-  padding: 4px;  
-}
-
-.rd-comment-zoom:hover {
-  -ms-transform: scale(1.1); /* IE 9 */
-  -webkit-transform: scale(1.1); /* Safari 3-8 */
-  transform: scale(1.1);
 }

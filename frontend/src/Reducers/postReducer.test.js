@@ -214,13 +214,14 @@ describe ('posts reducer', () => {
         type: types.EDIT_POST,
         id: '8xf0y6ziyjabvozdd253nd',
         title: 'Edit any post.',
-        body: 'Hello, I am here!'
+        body: 'Hello, I am here!',
+        timestamp: 1517591294867
       }
     )).toEqual ({
       posts: {
         '8xf0y6ziyjabvozdd253nd': {
           id:'8xf0y6ziyjabvozdd253nd',
-          timestamp:1467166872634,
+          timestamp:1517591294867,
           title:'Edit any post.',
           body:'Hello, I am here!',
           author:'thingtwo',
@@ -231,7 +232,8 @@ describe ('posts reducer', () => {
       },
       postDetails: {
           title:'Edit any post.',
-          body:'Hello, I am here!'
+          body:'Hello, I am here!',
+          timestamp: 1517591294867
       }
     })
   })

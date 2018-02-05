@@ -3,14 +3,15 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { fetchCategories } from '../../Actions/categoryAction'
-
+import * as typesCategory from '../../Constans/TextCategories'
 
 class ListCategories extends Component {
   /**
    * @description Validate the props declared
    */
   static propTypes = {
-    categories: PropTypes.array.isRequired
+    categories: PropTypes.array.isRequired,
+    getCategories: PropTypes.func.isRequired
   }
   /**
    * @description Invoke immediately after the component is inserted in the DOM
@@ -25,25 +26,25 @@ class ListCategories extends Component {
         {categories.map((category, index) => (          
           <div key={index} className="col-md-4">
             <div className="card text-center category-margin rd-box-category">
-              <div className="top-card-category" style={{backgroundColor:category.name==='react'?'#61DAFB':category.name==='redux'?'#7747BC':'#02B3E4'}}/>
+              <div className="rd-top-card-category" style={{backgroundColor:category.name==='react'?'#61DAFB':category.name==='redux'?'#7747BC':'#02B3E4'}}/>
               <div className="card-body">
                 <h5 className="card-title">{category.name}</h5>
                 <p className="card-text">
-                React makes it painless to create interactive UIs. 
-                Design simple views for each state in your application, 
-                and React will efficiently update and render just the right 
-                components when your data changes.
-                Declarative views make your code more predictable and easier to debug.
+                  {category.name === 'redux' && typesCategory.reduxCategory}
+                  {category.name === 'udacity' && typesCategory.udacityCategory}
+                  {category.name === 'react' && typesCategory.reactCategory}
                 </p>
-                <a className="btn-readable" style={{backgroundColor:category.name==='react'?'#61DAFB':category.name==='redux'?'#7747BC':'#02B3E4'}}>
-                  <Link style={{color: 'white'}}
+                <div>
+                  <Link 
+                  className="btn-readable" 
+                  style={{color: 'white', backgroundColor:category.name==='react'?'#61DAFB':category.name==='redux'?'#7747BC':'#02B3E4'}}
                   to={{
                     pathname:`/${category.name}`
                   }}
                   >
-                View Posts
+                  View Posts
                 </Link>
-                </a>
+                </div>
               </div>
             </div>
           </div>

@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import FaUser from 'react-icons/lib/fa/user'
 import CreateComment from './CreateComment'
 import FaTrashO from 'react-icons/lib/fa/trash-o'
 import FaEdit from 'react-icons/lib/fa/edit'
 import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up'
 import FaThumbsODown from 'react-icons/lib/fa/thumbs-o-down'
-import FaSmileO from 'react-icons/lib/fa/smile-o'
 import { convertDate } from '../../Util/helpers'
-import ReactModal from 'react-modal'
+import Modal from 'react-modal'
 import './Comment.css'
 
 class Comment extends Component {
@@ -21,17 +21,20 @@ class Comment extends Component {
     }
   }
   /**
-   * @description Allow show up menu or hide for upvote or downvote
+   * @description Validate the props declared
    */
-  openVoteMenu = () => {
-    this.state.menuVote
-    ? this.setState(() => ({menuVote: false}))
-    : this.setState(() => ({menuVote: true}))
-  }   
+  static propTypes = {
+    comment: PropTypes.object.isRequired,
+    editComment: PropTypes.bool.isRequired,
+    voteComment: PropTypes.func.isRequired,
+    openEditComment: PropTypes.func.isRequired,
+    onRemoveComment: PropTypes.func.isRequired,
+    idComment: PropTypes.string,
+    onCloseForm: PropTypes.func.isRequired
+  }
   render () {
     const {comment, editComment, voteComment, openEditComment, onRemoveComment, idComment, 
-      onEditComment, onCloseForm, onMenu, menu}=this.props
-    const {commentModal}=this.state
+      onCloseForm}=this.props
     return (  
     <li> 
       <div className="row">
@@ -44,43 +47,56 @@ class Comment extends Component {
           </div>
         </div>        
       </div>
-      <div className="row">
-        <div className="col-md-12">
-          <a className="rd-comment-aling-item" onMouseOver={this.openVoteMenu}>Vote</a>
-          <div className="rd-comment-vote" onMouseLeave={this.openVoteMenu} hidden={this.state.menuVote}>           
-            <a className="rd-comment-separator-vote" onClick={() => voteComment(comment.id, "upVote")}><FaThumbsOUp className="thumb-vote rd-comment-zoom" size={30}/></a>
-            <a className="rd-comment-separator-vote" onClick={() => voteComment(comment.id, "downVote")}><FaThumbsODown className="thumb-negative rd-comment-zoom" size={30}/></a>
-          </div>
-          <a className="rd-comment-number-vote">
-            {comment.voteScore >= 0
-              ? <i className="vote-number"><FaThumbsOUp size={20} className="thumb-vote" />{comment.voteScore}</i>
-              : <i className="vote-number"><FaThumbsODown size={20} className="thumb-negative" />{comment.voteScore}</i>
-            }         
-          </a>
-          <a>{convertDate(comment.timestamp)}</a>
-          <a className="list-element-post post-pointer" onClick={() => onRemoveComment(comment)}><FaTrashO className="trash trash-hover" size={20}/></a>
-          <a className="list-element-post post-pointer" onClick={() => openEditComment(comment.id)}><FaEdit className="trash edit-hover" size={20}/></a>
+      <div className="row text-center">
+        <div className="col-md-1 offset-4">
+          <a className="rd-list-element-post rd-post-pointer" onClick={() => voteComment(comment.id, "upVote")}><FaThumbsOUp className="rd-thumb-up" size={20}/></a>
+        </div>
+        <div className="col-md-1">
+        <a  onClick={() => voteComment(comment.id, "downVote")}><FaThumbsODown className="rd-thumb-down" size={20}/></a>
+        </div>
+        <div className="col-md-1">
+          {comment.voteScore >= 0
+            ? <i className="vote-number"><FaThumbsOUp size={20} className="thumb-vote"/>{comment.voteScore}</i>
+            : <i className="vote-number"><FaThumbsODown size={20} className="thumb-negative" />{comment.voteScore}</i>
+          }
+        </div>
+        <div className="col-md-1">
+          <a className="rd-list-element-post rd-post-pointer" onClick={() => openEditComment(comment.id)}><FaEdit className="rd-edit" size={20}/></a>
+        </div>
+        <div className="col-md-1">
+          <a className="rd-list-element-post rd-post-pointer" onClick={() => onRemoveComment(comment)}><FaTrashO className="rd-trash" size={20}/></a>
+        </div>
+        <div className="col-md-3">
+          <a style={{color:'#b9b9b9'}}>{convertDate(comment.timestamp)}</a>
         </div>
       </div>      
       {editComment && comment.id === idComment && (
-        <ReactModal
-        isOpen={editComment}
-        onRequestClose={onCloseForm}
-        style={{ 
-          overlay: {},
-          content: {left: 350, right: 350, top: 150, bottom: 150} 
-        }}
+        <Modal
+          isOpen={editComment}
+          onRequestClose={onCloseForm}
+          style={customStyles}
+          ariaHideApp={false}
         >
           <CreateComment           
             objComment={comment}
-            onEditComment={onEditComment}
             onCloseForm={onCloseForm}
             edit={true}
           /> 
-        </ReactModal>       
+        </Modal>       
       )}      
     </li>
     )
   }
 }
 export default Comment
+
+const customStyles = {
+  content : {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+}
