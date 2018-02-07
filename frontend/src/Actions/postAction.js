@@ -46,7 +46,7 @@ export function fetchPosts () {
   }
 }
 
-export function getPostById (postId) {  
+export function getPostById (postId) {
   return {
     type: DETAIL_POST,
     postId

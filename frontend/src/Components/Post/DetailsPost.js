@@ -104,8 +104,16 @@ class DetailsPost extends Component {
    */
   componentDidMount () {
     const id = this.props.match.params.post_id    
-    this.props.getPostById(id)    
+    this.props.getPostById(id)  
     this.props.getComments(id)
+  }
+  /**
+   * @description Invoke whenever the component is about to receive brand new props.
+   * @param {object} nextProps 
+   */
+  componentWillReceiveProps (nextProps) {     
+    typeof nextProps.post.error !== 'undefined' && this.props.history.push('/') 
+    Object.keys(nextProps.post).length === 0 && this.props.history.push('/')
   }
   render () {    
     const {post, comments, votePost, voteComment}=this.props    

@@ -1,4 +1,4 @@
-const api = 'http://localhost:3001'
+const api = process.env.REACT_APP_URL
 
 let token = localStorage.token
 
@@ -9,7 +9,6 @@ const headers = {
   'Accept': 'application/json',
   'Authorization': token
 }
-
 export const getAll = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())

@@ -11,6 +11,4 @@ const storeConfig = () => createStore(
     applyMiddleware(thunk, logger)
   )
 )
- 
-
 export default storeConfig

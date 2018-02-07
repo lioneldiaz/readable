@@ -123,11 +123,11 @@ class CreatePost extends Component {
             </div>
             <div className="form-group">
               <input className="form-control" type="text" name="title" placeholder="Title" value={this.state.title} onChange={this.handleChange} />
-              <div hidden={this.state.validateTitle} className="rd-post-validate-field-danger">Field Required</div>
+              <div hidden={this.state.validateTitle} className="rd-post-validate-field-danger">Required Field</div>
             </div>
             <div className="form-group">
               <textarea className="form-control" name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange}/> 
-              <div hidden={this.state.validateBody} className="rd-post-validate-field-danger">Field Required</div>
+              <div hidden={this.state.validateBody} className="rd-post-validate-field-danger">Required Field</div>
             </div>
             <div className="form-group">
               <input className="form-control" hidden={edit ? true :false} type="text" name="author" placeholder="Author" value={this.state.author} onChange={this.handleChange}/>
@@ -139,7 +139,7 @@ class CreatePost extends Component {
                   <option key={index} value={category.name}>{category.name}</option>
                 ))}              
               </select>
-              <div hidden={this.state.validateCategory} className="rd-post-validate-field-danger">Field Required</div>
+              <div hidden={this.state.validateCategory} className="rd-post-validate-field-danger">Required Field</div>
             </div>
             <div className="form-group">
                 <button className="btn rd-button">{edit ? "Edit" :"Save"}</button>            

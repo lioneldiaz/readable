@@ -84,11 +84,11 @@ class CreateComment extends Component {
         </div>
         <div className="form-group">  
           <input className="form-control" hidden={edit ? true : false} type="text" name="author" placeholder="Author" value={this.state.author} onChange={this.handleChange} />
-          <div hidden={this.state.validateAuthor} className="rd-post-validate-field-danger">Field Required</div>
+          <div hidden={this.state.validateAuthor} className="rd-post-validate-field-danger">Required Field</div>
         </div>
         <div className="form-group">  
           <textarea className="form-control" rows="4" name="body" placeholder="Body" value={this.state.body} onChange={this.handleChange} />
-          <div hidden={this.state.validateBody} className="rd-post-validate-field-danger">Field Required</div>
+          <div hidden={this.state.validateBody} className="rd-post-validate-field-danger">Required Field</div>
         </div>          
         <div className="form-group">  
           <input className="form-control" hidden={true} type="text" name="parentId" value={this.props.idPost} onChange={this.handleChange}/>

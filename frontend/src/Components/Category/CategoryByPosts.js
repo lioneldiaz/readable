@@ -35,7 +35,14 @@ class CategoryByPosts extends Component {
    */
   componentDidMount () {
     this.props.getPostsByCategory(this.props.match.params.category)
-  } 
+  }
+  /**
+   * @description Invoke whenever the component is about to receive new brand props  
+   * @param {object} nextProps 
+   */
+  componentWillReceiveProps (nextProps) {
+    nextProps.posts.length === 0 && this.props.history.push('/')
+  }
   render () {    
     const {posts, votePost}=this.props
     const {category}=this.props.match.params
