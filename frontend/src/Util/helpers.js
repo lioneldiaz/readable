@@ -50,11 +50,11 @@ export function sortBy (arrayPosts, typeOrder, propertySort) {
           arrayPosts[y] = arrayPosts[i],
           arrayPosts[i] = tempPost
         )
-      }
-    objPosts[arrayPosts[i].id] = tempPost
-    }  
-    return objPosts
+      }   
+    }
+    objPosts[arrayPosts[i].id] = tempPost 
   }
+  return objPosts
 }
 /**
  * @description Cut a string if this contain more than 65 characters

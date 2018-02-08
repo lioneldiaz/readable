@@ -7,6 +7,7 @@ import { generateKey } from '../Util/helpers'
 import CreatePost from './Post/CreatePost'
 import DetailsPost from './Post/DetailsPost'
 import '../App.css'
+import Error404 from './Error/Error404';
 
 class App extends Component {
  
@@ -39,12 +40,7 @@ class App extends Component {
             {...match}
           />
         )}/>
-        <Route render={(match) => (
-          [ 
-            <ListCategories key={generateKey()} />,
-            <ListPosts key={generateKey()} {...match}/>
-          ]
-        )}/>
+        <Route component={()=><Error404 />}/>
       </Switch>
       </div>
     )

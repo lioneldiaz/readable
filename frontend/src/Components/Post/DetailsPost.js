@@ -112,8 +112,8 @@ class DetailsPost extends Component {
    * @param {object} nextProps 
    */
   componentWillReceiveProps (nextProps) {     
-    typeof nextProps.post.error !== 'undefined' && this.props.history.push('/') 
-    Object.keys(nextProps.post).length === 0 && this.props.history.push('/')
+    typeof nextProps.post.error !== 'undefined' && this.props.history.push('/not/match/webpage/error404') 
+    Object.keys(nextProps.post).length === 0 && this.props.history.push('/not/match/webpage/error404')
   }
   render () {    
     const {post, comments, votePost, voteComment}=this.props    

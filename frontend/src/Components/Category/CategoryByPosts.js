@@ -41,7 +41,9 @@ class CategoryByPosts extends Component {
    * @param {object} nextProps 
    */
   componentWillReceiveProps (nextProps) {
-    nextProps.posts.length === 0 && this.props.history.push('/')
+    const category = this.props.match.params.category
+    category !== 'react' && category !== 'redux' && category !== 'udacity'
+    && nextProps.posts.length === 0 && this.props.history.push('/not/match/webpage/error404')
   }
   render () {    
     const {posts, votePost}=this.props
@@ -65,19 +67,26 @@ class CategoryByPosts extends Component {
           </div>        
         </div>
         <div className="rd-separator"/>     
-        <div className="row">          
-          {posts.map((post, index) => (
-            <div key={index} className="col-md-12">
-              <Post 
-                key={index} 
-                post={post} 
-                onVote={votePost} 
-                onRemovePost={this.onRemovePost} 
-                typeVote={"postCategory"}
-                typeRemove={"postCategory"}
-              />
-            </div>
-          ))}
+        <div className="row">
+          {posts.length !== 0
+            ? posts.map((post, index) => (
+              <div key={index} className="col-md-12">
+                <Post 
+                  key={index} 
+                  post={post} 
+                  onVote={votePost} 
+                  onRemovePost={this.onRemovePost} 
+                  typeVote={"postCategory"}
+                  typeRemove={"postCategory"}
+                />
+              </div>))
+            : <div className="col-md-12 text-center">
+              <div className="rd-top-card-category" style={{backgroundColor:category==='react'?'#61DAFB':category==='redux'?'#7747BC':'#02B3E4'}}/>
+                <div className="rd-category-by-post-body">
+                  <h1 className="display-4">Not posts for this category</h1>
+                </div>
+              </div>
+          }
         </div>        
       </div>
     )

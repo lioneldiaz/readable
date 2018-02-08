@@ -1,0 +1,12 @@
+.rd-error-404-title {
+  background: #02B3E4;
+  margin-top: 10px;
+}
+.rd-error-404-body {
+  background: white;
+  padding: 10px;
+}
+.rd-error-404-text {
+  padding: 10px;
+  color: white;
+}
